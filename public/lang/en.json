@@ -1,0 +1,35 @@
+{
+  "AUTH": {
+      "LOGIN": {
+          "username": "Username",
+          "password": "Password",
+          "signIn": "Sign In",
+          "classicLogin": "Classic login",
+          "socialMedias": "Social Medias",
+          "passwordForgotten": "Password forgotten ?",
+          "notRegisteredYet": "Not registered yet ?",
+          "login": "Login",
+          "loginWithFacebook": "Login with Facebook",
+          "loginWithGoogle": "Login with Google",
+          "loginWithGithub": "Login with GitHub"
+      },
+      "REGISTRATION": {
+          "aboutToRegister": "You are about to register.",
+          "ifAlreadyRegistered": "If you already have an account",
+          "signIn": "please sign in",
+          "signUp": "Sign up",
+          "username": "Username",
+          "email": "Email",
+          "password": "Password",
+          "rulesConfirmation": "By signing up, you agree to our",
+          "termsOfService": "Terms Of Service",
+          "register": "Register",
+          "joinUs": "You'll love ObonoB !",
+          "accountIn5sec": "Your account in 5 sec...",
+          "unlimitedNbProjects": "Create unlimited number of projects",
+          "shareProjects": "Share and get reviews from the community",
+          "buildCommunity": "Build a community around you",
+          "raiseMoney": "Start raising money for your projects"
+      }
+  }
+}

@@ -1,0 +1,66 @@
+<div id="registration">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ 'AUTH.REGISTRATION.signUp' | translate }}</li>
+        </ol>
+    </nav>
+
+    <div class="page-header">
+        <h1>{{ 'AUTH.REGISTRATION.signUp' | translate }}</h1>
+    </div>
+
+    <div class="container">
+        <div class="alert alert-secondary" role="alert">
+            {{ 'AUTH.REGISTRATION.aboutToRegister' | translate }} {{ 'AUTH.REGISTRATION.ifAlreadyRegistered' | translate }}, <a [routerLink]="['/auth/login']">{{ 'AUTH.REGISTRATION.signIn' | translate }}.</a>
+        </div>
+        <br />
+        <div class="row">
+            <div class="col-lg-6">
+                <h2 class="title">Inscription</h2>
+
+                <form [formGroup]="registrationForm" (ngSubmit)="register()" ngNativeValidate>
+                    <div class="form-group">
+                        <input type="text" class="form-control" formControlName="username" placeholder="{{ 'AUTH.REGISTRATION.username' | translate }}" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-control" formControlName="email" placeholder="{{ 'AUTH.REGISTRATION.email' | translate }}" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" formControlName="password" placeholder="{{ 'AUTH.REGISTRATION.password' | translate }}" required>
+                    </div>
+                    <p class="form-check-label text-muted text-center">{{ 'AUTH.REGISTRATION.rulesConfirmation' | translate }} <a href="#">{{ 'AUTH.REGISTRATION.termsOfService' | translate }}</a></p>
+                    <br />
+                    <button type="submit" class="btn btn-info btn-block" [disabled]="!registrationForm.valid">{{ 'AUTH.REGISTRATION.register' | translate }}</button>
+                    <br /><br />
+                </form>
+            </div>
+            <div class="col-lg-6">
+                <h2 class="title">{{ 'AUTH.REGISTRATION.joinUs' | translate }}</h2>
+                <div class="presentation">
+                    <h3 class="register">{{ 'AUTH.REGISTRATION.accountIn5sec' | translate }}.</h3>
+                    <br />
+                    <div class="row">
+                        <div class="col-lg-3">
+                            <p class="text-center"><img src="https://cdn1.iconfinder.com/data/icons/office-and-business-roundicons/137/Office_Business_work-02-64.png" /></p>
+                            <p class="text-center">{{ 'AUTH.REGISTRATION.unlimitedNbProjects' | translate }}</p>
+                        </div>
+                        <div class="col-lg-3">
+                            <p class="text-center"><img src="https://cdn2.iconfinder.com/data/icons/hospital-4/500/group-64.png" /></p>
+                            <p class="text-center">{{ 'AUTH.REGISTRATION.shareProjects' | translate }}</p>
+                        </div>
+                        <div class="col-lg-3">
+                            <p class="text-center"><img src="https://cdn1.iconfinder.com/data/icons/communication-flat-circle-shadow-vol-4/150/megaphone__speaker__ads__announcement-64.png" /></p>
+                            <p class="text-center">{{ 'AUTH.REGISTRATION.buildCommunity' | translate }}</p>
+                        </div>
+                        <div class="col-lg-3">
+                            <p class="text-center"><img src="https://cdn0.iconfinder.com/data/icons/money-icons-rounded/110/Money-Bag-64.png" /></p>
+                            <p class="text-center">{{ 'AUTH.REGISTRATION.raiseMoney' | translate }}</p>
+                        </div>
+                    </div>
+                    <br /><br />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

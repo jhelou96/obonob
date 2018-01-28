@@ -1,0 +1,49 @@
+<div id="login">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ 'AUTH.LOGIN.signIn' | translate }}</li>
+        </ol>
+    </nav>
+
+    <div class="page-header">
+        <h1>{{ 'AUTH.LOGIN.signIn' | translate }}</h1>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <h2 class="title">{{ 'AUTH.LOGIN.classicLogin' | translate }}</h2>
+
+                <form [formGroup]="loginForm" (ngSubmit)="login()" ngNativeValidate>
+                    <div class="form-group">
+                        <input type="text" class="form-control" formControlName="username" placeholder="{{ 'AUTH.LOGIN.username' | translate }}" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" class="form-control" formControlName="password" placeholder="{{ 'AUTH.LOGIN.password' | translate }}" required>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <a [routerLink]="['/auth/reset-password']">{{ 'AUTH.LOGIN.passwordForgotten' | translate }}</a>
+                        </div>
+                        <div class="col-sm-6">
+                            <p class="text-right">
+                                <a [routerLink]="['/auth/register']">{{ 'AUTH.LOGIN.notRegisteredYet' | translate }}</a>
+                            </p>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-info btn-block" [disabled]="!loginForm.valid">{{ 'AUTH.LOGIN.login' | translate }}</button>
+                    <br /><br />
+                </form>
+
+            </div>
+            <div class="col-lg-6">
+                <h2 class="title">{{ 'AUTH.LOGIN.socialMedias' | translate }}</h2>
+                <a class="btn btn-block btn-social btn-facebook isDisabled"> <span class="fab fa-facebook-f float-left" style="margin-top: 4px;"></span> {{ 'AUTH.LOGIN.loginWithFacebook' | translate }}</a><br/>
+                <a class="btn btn-block btn-social btn-google isDisabled"> <span class="fab fa-google float-left" style="margin-top: 4px;"></span> {{ 'AUTH.LOGIN.loginWithGoogle' | translate }}</a><br/>
+                <a class="btn btn-block btn-social btn-github isDisabled"> <span class="fab fa-github float-left" style="margin-top: 4px;"></span> {{ 'AUTH.LOGIN.loginWithGithub' | translate }}</a>
+                <br /><br />
+            </div>
+        </div>
+    </div>
+</div>

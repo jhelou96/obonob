@@ -1,0 +1,76 @@
+<div class="row fixed-top no-gutters custom-navbar">
+    <a href="#" class="navbar-logo col-lg-1" align="center"><img src="https://cdn2.iconfinder.com/data/icons/african-animals/128/monkey-64.png" /></a>
+    <div class="col-lg-11">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Projets</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Présentation</a>
+                    </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Blog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Forums</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">A Propos</a>
+                    </li>
+                    <li class="nav-item d-md-none d-lg-none d-xl-none">
+                        <a [routerLink]="['/auth/login']" class="nav-link" *ngIf="!isLoggedIn()">Espace Membre</a>
+                    </li>
+                </ul>
+            </div>
+            <a href="#" *ngIf="isLoggedIn()"><i class="far fa-bell notifications"></i></a>
+            <a href="#" (click)="showSidebar()" *ngIf="isLoggedIn()" id="showSidebar"><img src="https://cdn3.iconfinder.com/data/icons/women-avatars-1/256/5-01-512.png" class="rounded-circle avatar" /></a>
+            <a [routerLink]="['/auth/login']" class="btn btn-info d-none d-md-block" *ngIf="!isLoggedIn()"><span class="fa fa-lock"></span> Espace Membre</a>
+        </nav>
+    </div>
+</div>
+
+<div id="sidebar" *ngIf="isLoggedIn()" (clickOutside)="hideSidebar()" [exclude]="'#showSidebar'">
+    <div class="list-group">
+        <p class="text-center avatar"><img src="https://cdn3.iconfinder.com/data/icons/women-avatars-1/256/5-01-512.png" class="rounded-circle" /></p>
+        <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-user" style="float:left; margin-top:2px;"></i> Mon compte</a>
+        <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-folder-open" style="float:left; margin-top:2px;"></i> Mes projets</a>
+        <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-envelope" style="float:left; margin-top:2px;"></i> Messagerie</a>
+        <a href="#" (click)="onLogout()" class="list-group-item list-group-item-action logout"><i class="fas fa-sign-out-alt" style="float:left; margin-top:2px;"></i> Déconnexion</a>
+    </div>
+</div>
+
+<div id="body">
+    <app-alert></app-alert>
+    <router-outlet></router-outlet>
+</div>
+
+<footer>
+    <div class="container-fluid">
+        <div class="d-none d-sm-block">
+            <div class="row">
+                <div class="col-sm-4">
+                    <p>&copy; BeeZer &bull; Version: <a href="#">0.1-Zirkon</a></p>
+                </div>
+                <div class="col-sm-4">
+                    <p class="text-center social"><a href="#"><i class="fab fa-facebook-f"></i></a> <a href="#"><i class="fab fa-twitter"></i></a> <a href="#"><i class="fab fa-blogger-b"></i></a></p>
+                </div>
+                <div class="col-sm-4">
+                    <p class="text-right"><a href="#">API</a> &bull; <a href="#">CGU</a> &bull; <a href="#">Confidentialité</a>  &bull; <a href="#">Contact</a></p>
+                </div>
+            </div>
+        </div>
+        <div class="d-sm-none">
+            <div class="row">
+                <div class="col-sm-12">
+                    <p class="text-center">BeeZer &copy; 2018 &bull; Tous droits réservés</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>

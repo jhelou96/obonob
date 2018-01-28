@@ -1,0 +1,9 @@
+<div class="alert-notification">
+    <div class="alert-type">
+        <img *ngIf="alert && alert.type == 'error'" src="https://cdn3.iconfinder.com/data/icons/flatastic-10-2/256/trafficlight_red-16.png" />
+    </div>
+    <div class="alert-content">
+        {{ alert?.message }}
+        <div class="alert-dismiss"><a (click)="dismissAlert()"><i class="fas fa-times"></i></a></div>
+    </div>
+</div>
