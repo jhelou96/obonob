@@ -29,7 +29,7 @@
                 </ul>
             </div>
             <a href="#" *ngIf="isLoggedIn()"><i class="far fa-bell notifications"></i></a>
-            <a href="#" (click)="showSidebar()" *ngIf="isLoggedIn()" id="showSidebar"><img src="https://cdn3.iconfinder.com/data/icons/women-avatars-1/256/5-01-512.png" class="rounded-circle avatar" /></a>
+            <a (click)="showSidebar()" *ngIf="isLoggedIn()" id="showSidebar"><img src="https://cdn3.iconfinder.com/data/icons/women-avatars-1/256/5-01-512.png" class="rounded-circle avatar" /></a>
             <a [routerLink]="['/auth/login']" class="btn btn-info d-none d-md-block" *ngIf="!isLoggedIn()"><span class="fa fa-lock"></span> Espace Membre</a>
         </nav>
     </div>
@@ -39,7 +39,7 @@
     <div class="list-group">
         <p class="text-center avatar"><img src="https://cdn3.iconfinder.com/data/icons/women-avatars-1/256/5-01-512.png" class="rounded-circle" /></p>
         <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-user" style="float:left; margin-top:2px;"></i> Mon compte</a>
-        <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-folder-open" style="float:left; margin-top:2px;"></i> Mes projets</a>
+        <a [routerLink]="['/projects/my-projects']" (click)="hideSidebar()" class="list-group-item list-group-item-action"><i class="fas fa-folder-open" style="float:left; margin-top:2px;"></i> Mes projets</a>
         <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-envelope" style="float:left; margin-top:2px;"></i> Messagerie</a>
         <a href="#" (click)="onLogout()" class="list-group-item list-group-item-action logout"><i class="fas fa-sign-out-alt" style="float:left; margin-top:2px;"></i> Déconnexion</a>
     </div>

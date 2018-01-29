@@ -22,6 +22,9 @@ import {TranslateModule} from "@ngx-translate/core";
     ],
     providers: []
 })
+/**
+ * Auth module package
+ */
 export class AuthModule {
 
 }
