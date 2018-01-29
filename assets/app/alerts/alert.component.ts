@@ -2,6 +2,7 @@ import {Component, OnInit} from "@angular/core";
 import {AlertService} from "./alert.service";
 import {Alert} from "./alert.model";
 import {Observable} from 'rxjs/RX';
+import {Router} from "@angular/router";
 
 declare var jquery:any;
 declare var $ :any;
@@ -16,7 +17,12 @@ declare var $ :any;
 export class AlertComponent implements OnInit {
     alert: Alert; //Alert object containing the type and message of the alert
 
-    constructor(private alertService: AlertService) {}
+    constructor(private alertService: AlertService, private router: Router) {
+        //Listen for route change and automatically dismiss alert if route changed
+        this.router.events.subscribe((event) => {
+            $(".alert-notification").hide();
+        });
+    }
 
     /**
      * Method executed on initialization
@@ -43,4 +49,6 @@ export class AlertComponent implements OnInit {
     dismissAlert() {
         $(".alert-notification").fadeOut();
     }
+
+
 }
