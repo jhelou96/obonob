@@ -28,6 +28,13 @@ a {
   	text-decoration: none;
 }
 
+.thead-custom {
+	background-color: rgb(52, 58, 64);
+	color: white;
+	font-family: 'Oswald';
+	color: rgb(110, 120, 140);
+	font-size: 16px;
+}
 
 /****************************************/
 /*************** ALERTS *****************/
@@ -42,6 +49,7 @@ a {
 	z-index: 10;
 	opacity: 0.9;
 	font-size: 12px;
+	border-radius: 15px;
 	display: none;
 }
 .alert-notification .alert-type {
@@ -69,6 +77,7 @@ a {
 /****************************************/
 /*************** NAVBAR *****************/
 /****************************************/
+
 .custom-navbar {
 	height: 70px;
 	z-index: 9;
@@ -117,6 +126,7 @@ a {
 /****************************************/
 /************** SIDEBAR *****************/
 /****************************************/
+
 #sidebar {
 	display: none;
 	position: fixed;
@@ -198,7 +208,7 @@ a {
 	background-color: rgb(100, 160, 50);
 	margin-top: -20px;
 	border-bottom: 5px solid rgb(230, 230, 230);
-	margin-bottom: 30px;
+	margin-bottom: 50px;
 }
 #body .page-header h1 {
 	line-height: 120px;
@@ -226,7 +236,7 @@ a {
 	padding: 30px;
 }
 #home .jumbotron .card {
-	z-index: 7;
+	z-index: 10;
 	width: 300px;
 	opacity: 0.95;
 	margin: auto;
@@ -396,37 +406,6 @@ a {
 }
 
 /****************************************/
-/************* REGISTRATION *************/
-/****************************************/
-
-/* Features Presentation */
-#registration .presentation .register {
-	font-family: 'Pattaya';
-	text-align: center;
-	opacity: 0.8;
-}
-#registration .presentation img {
-	height: 64px;
-	width: 64px;
-	-webkit-transition-property: height, width;
-	-webkit-transition-duration: 1s;
-	-moz-transition-property: height, width;
-	-moz-transition-duration: 1s;
-	transition-property: height, width;
-	transition-duration: 0.5s;
-}
-#registration .presentation img:hover {
-	height: 80px;
-	width: 80px;
-	-webkit-transition-property: height, width;
-	-webkit-transition-duration: 1s;
-	-moz-transition-property: height, width;
-	-moz-transition-duration: 1s;
-	transition-property: height, width;
-	transition-duration: 0.5s;
-}
-
-/****************************************/
 /************ RESET PASSWORD ************/
 /****************************************/
 
@@ -435,6 +414,14 @@ a {
 }
 #resetPassword .input-group-addon .btn {
 	border-radius: 0px 5px 5px 0px;
+}
+
+/****************************************/
+/************** MY PROJECTS *************/
+/****************************************/
+
+#myProjects .contributions .badge {
+	font-size: 16px;
 }
 
 /****************************************/

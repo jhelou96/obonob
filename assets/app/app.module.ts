@@ -12,6 +12,7 @@ import {ClickOutsideModule} from "ng-click-outside";
 import {AlertComponent} from "./alerts/alert.component";
 import {TranslateLoader, TranslateModule, TranslateService} from "@ngx-translate/core";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
+import {ProjectsComponent} from "./projects/projects.component";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -24,7 +25,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         AppComponent,
         IndexComponent,
         AuthComponent,
-        AlertComponent
+        AlertComponent,
+        ProjectsComponent
     ],
     imports: [
         BrowserModule,
