@@ -6,6 +6,7 @@ import {ProjectsService} from "./projects.service";
 import {Category} from "./category.model";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Project} from "./project.model";
+import {AlertService} from "../alerts/alert.service";
 
 declare var jquery:any;
 declare var $ :any;
@@ -19,7 +20,7 @@ export class MyProjectsComponent implements OnInit {
     categories: Category[]; //Array of projects categories
     newProjectForm: FormGroup; //New project form
 
-    constructor(private titleService: Title, private router: Router, private authService: AuthService, private projectsService: ProjectsService) {}
+    constructor(private titleService: Title, private router: Router, private authService: AuthService, private projectsService: ProjectsService, private alertService: AlertService) {}
 
     /**
      * Method executed on initialization
@@ -83,6 +84,9 @@ export class MyProjectsComponent implements OnInit {
         );
 
         this.projectsService.newProject(project).subscribe();
+
+        //Throw success notification
+        this.alertService.handleAlert("success", 'Project created.');
 
         this.newProjectForm.reset();
         $(".backdrop").hide();
