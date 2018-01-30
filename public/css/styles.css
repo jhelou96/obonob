@@ -430,6 +430,36 @@ a {
 }
 
 /****************************************/
+/************ REGISTRATION **************/
+/****************************************/
+
+#registration .presentation .register {
+	font-family: Pattaya;
+	text-align: center;
+	opacity: 0.85;
+}
+#registration .presentation img {
+	width: 64px;
+	height: 64px;
+	-webkit-transition-property: height, width;
+	-webkit-transition-duration: 0.5s;
+	-moz-transition-property: height, width;
+	-moz-transition-duration: 0.5s;
+	transition-property: height, width;
+	transition-duration: 0.5s;
+}
+#registration .presentation img:hover {
+	width: 75px;
+	height: 75px;
+	-webkit-transition-property: height, width;
+	-webkit-transition-duration: 0.5s;
+	-moz-transition-property: height, width;
+	-moz-transition-duration: 0.5s;
+	transition-property: height, width;
+	transition-duration: 0.5s;
+}
+
+/****************************************/
 /************ RESET PASSWORD ************/
 /****************************************/
 
