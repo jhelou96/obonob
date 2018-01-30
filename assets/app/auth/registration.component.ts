@@ -4,6 +4,7 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "./auth.service";
 import {User} from "./user.model";
 import {Router} from "@angular/router";
+import {AlertService} from "../alerts/alert.service";
 
 @Component({
     selector: 'app-auth-registration',
@@ -15,7 +16,7 @@ import {Router} from "@angular/router";
 export class RegistrationComponent implements OnInit {
     registrationForm: FormGroup;
 
-    constructor(private titleService: Title, private authService: AuthService, private router: Router) {}
+    constructor(private titleService: Title, private authService: AuthService, private router: Router, private alertService: AlertService) {}
 
     /**
      * Method executed on initialization
@@ -47,6 +48,9 @@ export class RegistrationComponent implements OnInit {
         );
 
         this.authService.register(user).subscribe();
+
+        //Throw success notification
+        this.alertService.handleAlert("success", 'Account created. You may sign in.');
 
         this.registrationForm.reset();
     }

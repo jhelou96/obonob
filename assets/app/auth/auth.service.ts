@@ -11,7 +11,7 @@ import {JwtHelper} from "angular2-jwt";
  * Service for the authentication module
  */
 export class AuthService {
-    constructor(private httpClient: HttpClient, private errorService: AlertService, private router: Router) {}
+    constructor(private httpClient: HttpClient, private alertService: AlertService, private router: Router) {}
 
     /**
      *  Sends user data to the backend for registration purposes
@@ -23,7 +23,7 @@ export class AuthService {
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
         return this.httpClient.post('http://localhost:3000/user/register', body, {headers: headers})
             .catch((error: HttpErrorResponse) => {
-                this.errorService.handleAlert("error", error.error.error);
+                this.alertService.handleAlert("error", error.error.error);
                 return Observable.throw(error);
             });
     }
@@ -38,7 +38,7 @@ export class AuthService {
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
         return this.httpClient.post('http://localhost:3000/user/login', body, {headers: headers})
             .catch((error: HttpErrorResponse) => {
-                this.errorService.handleAlert("error", error.error.error);
+                this.alertService.handleAlert("error", error.error.error);
                 return Observable.throw(error);
             });
     }
