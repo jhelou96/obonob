@@ -13,7 +13,7 @@ declare var $ :any;
  * Main App component
  */
 export class AppComponent {
-    constructor(private authService: AuthService, private router: Router, private _eref: ElementRef) {}
+    constructor(private authService: AuthService, private _eref: ElementRef) {}
 
     /**
      * Checks if user is logged in
@@ -28,7 +28,6 @@ export class AppComponent {
      */
     onLogout() {
         this.authService.logout();
-        this.router.navigateByUrl('/');
     }
 
     /**

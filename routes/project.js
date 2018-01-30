@@ -8,7 +8,7 @@ var jwt = require('jsonwebtoken');
 /**
  * Retrieves the list of categories
  */
-router.get('/list-categories', function(req, res, next) {
+router.get('/categories', function(req, res, next) {
     Category.find().exec(function(err, categories) {
         if(err) {
             return res.status(500).json({
@@ -49,7 +49,7 @@ router.post('/', function(req, res, next) {
     User.findById(token.user._id, function(err, user) {
         //If user doesn't exist
         if(err) {
-           return res.status.status(401).json({
+           return res.status(401).json({
                title: 'An error occured',
                error: err
            });
@@ -66,7 +66,6 @@ router.post('/', function(req, res, next) {
 
         //Save project in database
         project.save(function(err, result) {
-            //If user already registered
             if(err) {
                 return res.status(500).json({
                     title: 'An error occured',
@@ -77,8 +76,39 @@ router.post('/', function(req, res, next) {
             res.status(201).json({
                 message: 'Project created',
                 obj: result
-            })
+            });
         })
+    });
+});
+
+/**
+ * Retrieves the list of projects of a user
+ */
+router.get('/', function(req, res, next) {
+    token = jwt.decode(req.query.token);
+    User.findById(token.user._id, function(err, user) {
+        //If user doesn't exist
+        if (err) {
+            return res.status(401).json({
+                title: 'An error occured',
+                error: err
+            });
+        }
+
+        //Find user's projects
+        Project.find({author: user}).exec(function(err, projects) {
+            if (err) {
+                return res.status(500).json({
+                    title: 'An error occured',
+                    error: err
+                });
+            }
+
+            res.status(201).json({
+                message: 'Success',
+                obj: projects
+            });
+        });
     });
 });
 

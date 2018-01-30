@@ -46,7 +46,7 @@ export class RegistrationComponent implements OnInit {
             this.registrationForm.value.email
         );
 
-        this.authService.register(user);
+        this.authService.register(user).subscribe();
 
         this.registrationForm.reset();
     }

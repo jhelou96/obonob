@@ -1,3 +1,6 @@
+/**
+ * Frontend model for the project
+ */
 export class Project {
     constructor(
         public name: string,

@@ -10,7 +10,7 @@ var schema = new Schema({
     name: {type: String, required: true},
     address: {type: String, required: true},
     description: {type: String, required: true},
-    category: {type: Schema.Types.ObjectId, ref: 'Category'}
+    category: {type: String, required: true}
 });
 
 schema.plugin(mongooseUniqueValidator); //Allows to throw error when unique attribute not satisfied

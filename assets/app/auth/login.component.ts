@@ -50,8 +50,7 @@ export class LoginComponent implements OnInit {
                 localStorage.setItem('token', data.token); //Store generated token locally
                 localStorage.setItem('userId', data.userId); //Store user id locally
                 this.router.navigateByUrl('/'); //Redirect user to home page
-            },
-            error => console.error(error)
+            }
         );
 
         this.loginForm.reset();

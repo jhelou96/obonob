@@ -15,6 +15,7 @@ declare var $ :any;
     templateUrl: './myProjects.component.html'
 })
 export class MyProjectsComponent implements OnInit {
+    projects: Project[]; //Array of projects
     categories: Category[]; //Array of projects categories
     newProjectForm: FormGroup; //New project form
 
@@ -31,12 +32,19 @@ export class MyProjectsComponent implements OnInit {
         //Page title
         this.titleService.setTitle('test');
 
+        //List of projects
+        this.projectsService.getProjects().subscribe(
+            (projects: Project[]) => {
+                this.projects = projects;
+            }
+        );
+
         //List of projects categories
         this.projectsService.getCategories().subscribe(
             (projectsCategories: Category[]) => {
                 this.categories = projectsCategories;
             }
-        )
+        );
 
         // New project form
         this.newProjectForm = new FormGroup({
@@ -74,11 +82,10 @@ export class MyProjectsComponent implements OnInit {
             this.newProjectForm.value.category
         );
 
-        this.projectsService.newProject(project).subscribe(
-            data => console.log(data),
-            error =>console.error(error)
-        );
+        this.projectsService.newProject(project).subscribe();
 
         this.newProjectForm.reset();
+        $(".backdrop").hide();
+        $("#newProjectModal").hide();
     }
 }

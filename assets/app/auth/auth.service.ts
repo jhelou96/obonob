@@ -3,13 +3,15 @@ import {Injectable} from "@angular/core";
 import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {Observable} from "rxjs/Observable";
 import {AlertService} from "../alerts/alert.service";
+import {Router} from "@angular/router";
+import {JwtHelper} from "angular2-jwt";
 
 @Injectable()
 /**
  * Service for the authentication module
  */
 export class AuthService {
-    constructor(private httpClient: HttpClient, private errorService: AlertService) {}
+    constructor(private httpClient: HttpClient, private errorService: AlertService, private router: Router) {}
 
     /**
      *  Sends user data to the backend for registration purposes
@@ -46,12 +48,17 @@ export class AuthService {
      */
     logout() {
         localStorage.clear();
+        this.router.navigateByUrl('/');
     }
 
     /**
      * Checks if user is logged in
      */
     isLoggedIn() {
-        return localStorage.getItem('token') !== null;
+        const jwtHelper = new JwtHelper();
+        if(localStorage.getItem('token') !== null && !jwtHelper.isTokenExpired(localStorage.getItem('token')))
+            return true;
+
+        return false;
     }
 }
