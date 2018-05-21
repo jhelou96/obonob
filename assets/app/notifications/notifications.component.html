@@ -1,0 +1,50 @@
+<ng-container *ngIf="notifications">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a [routerLink]="['/']">{{ 'NOTIFICATIONS.home' | translate }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ 'NOTIFICATIONS.myNotifications' | translate }}</li>
+        </ol>
+    </nav>
+
+    <div class="page-header">
+        <h1><img class="d-none d-sm-inline" src="/images/mascot/{{pageHeaderImage}}" /> {{ 'NOTIFICATIONS.myNotifications' | translate }}</h1>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 mb-3">
+                <table class="table table-striped">
+                    <tbody>
+                        <ng-container *ngFor="let notification of notifications | paginate: { itemsPerPage: 10, currentPage: page }">
+                            <tr *ngIf="notification.type == 0" [routerLink]="['/messaging/' + notification.data[0]]">
+                                <td>{{ 'NOTIFICATIONS.privateMsgFrom' | translate }} <strong>{{notification.sender.username}}</strong> {{ 'NOTIFICATIONS.withSubject' | translate }} <strong>{{notification.data[1]}}</strong></td>
+                                <td class="text-right" *ngIf="dateThreshold(notification.date) >= 1">{{notification.date | amDateFormat:'LL'}}</td>
+                                <td class="text-right" *ngIf="dateThreshold(notification.date) < 1">{{notification.date | amTimeAgo}}</td>
+                            </tr>
+                            <tr *ngIf="notification.type == 1" [routerLink]="['/projects/' + notification.data[0]]">
+                                <td>{{ 'NOTIFICATIONS.newMedia' | translate }} <strong>{{notification.data[1]}}</strong></td>
+                                <td class="text-right" *ngIf="dateThreshold(notification.date) >= 1">{{notification.date | amDateFormat:'LL'}}</td>
+                                <td class="text-right" *ngIf="dateThreshold(notification.date) < 1">{{notification.date | amTimeAgo}}</td>
+                            </tr>
+                            <tr *ngIf="notification.type == 2" [routerLink]="['/projects/' + notification.data[0]]">
+                                <td>{{ 'NOTIFICATIONS.newPost' | translate }} <strong>{{notification.data[1]}}</strong></td>
+                                <td class="text-right" *ngIf="dateThreshold(notification.date) >= 1">{{notification.date | amDateFormat:'LL'}}</td>
+                                <td class="text-right" *ngIf="dateThreshold(notification.date) < 1">{{notification.date | amTimeAgo}}</td>
+                            </tr>
+                            <tr *ngIf="notification.type == 3" [routerLink]="['/projects/' + notification.data[0]]">
+                                <td>{{ 'NOTIFICATIONS.newPost' | translate }} <strong>{{notification.data[1]}}</strong></td>
+                                <td class="text-right" *ngIf="dateThreshold(notification.date) >= 1">{{notification.date | amDateFormat:'LL'}}</td>
+                                <td class="text-right" *ngIf="dateThreshold(notification.date) < 1">{{notification.date | amTimeAgo}}</td>
+                            </tr>
+                        </ng-container>
+                        <tr *ngIf="notifications.length == 0">
+                            <td class="text-center"><i>{{ 'NOTIFICATIONS.noNotifications' | translate }}</i></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br />
+                <p class="text-center"><pagination-controls [autoHide]="true" (pageChange)="page = $event"></pagination-controls></p>
+            </div>
+        </div>
+    </div>
+</ng-container>

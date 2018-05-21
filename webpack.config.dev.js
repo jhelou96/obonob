@@ -18,8 +18,8 @@ module.exports = webpackMerge(commonConfig, {
                 test: /\.ts$/,
                 use: [
                     {loader: 'awesome-typescript-loader', options: {
-                        transpileOnly: true
-                    }},
+                            transpileOnly: true
+                        }},
                     {loader: 'angular2-template-loader'},
                     {loader: 'angular-router-loader'}
                 ]

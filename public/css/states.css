@@ -1,0 +1,17 @@
+/* Disabled state */
+.isDisabled {
+    color: currentColor;
+    cursor: not-allowed !important;
+    opacity: 0.5;
+    text-decoration: none;
+}
+
+/* Blurry state */
+.isBlurred {
+    filter: blur(1px);
+}
+
+/* State for projects calendar */
+.calendar .isTodayDate {
+    background-color: rgb(240, 240, 240);
+}

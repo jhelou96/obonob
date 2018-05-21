@@ -1,0 +1,633 @@
+/****************************************/
+/************* PROJECT BOX **************/
+/****************************************/
+
+.project-box:hover {
+    cursor: pointer;
+}
+.project-box .description {
+    padding: 0px;
+    position: relative;
+    overflow: hidden;
+    height: 200px;
+}
+.project-box .description h3 {
+    border-bottom:2px solid white;
+    padding-top:30px;
+    padding-bottom: 10px;
+}
+.project-box .description p {
+    margin-right: 5px;
+    margin-left: 5px;
+}
+.project-box .description:hover .caption {
+    opacity: 1;
+    transform: translateY(-150px);
+    -webkit-transform:translateY(-150px);
+    -moz-transform:translateY(-150px);
+    -ms-transform:translateY(-150px);
+    -o-transform:translateY(-150px);
+}
+.project-box .description img {
+    z-index: 4;
+    height: 200px;
+    width: 100%;
+}
+.project-box .description .caption {
+    position: absolute;
+    top:150px;
+    -webkit-transition:all 0.3s ease-in-out;
+    -moz-transition:all 0.3s ease-in-out;
+    -o-transition:all 0.3s ease-in-out;
+    -ms-transition:all 0.3s ease-in-out;
+    transition:all 0.3s ease-in-out;
+    width: 100%;
+}
+.project-box .description .blur {
+    background-color: rgba(0,0,0,0.7);
+    height: 300px;
+    z-index: 5;
+    position: absolute;
+    width: 100%;
+}
+.project-box .description .caption-text {
+    z-index: 6;
+    color: #fff;
+    position: absolute;
+    height: 300px;
+    text-align: center;
+    top:-20px;
+    width: 100%;
+}
+.project-box .footer {
+    height: 40px;
+    background-color: #FAFAFA;
+}
+.project-box .footer p {
+    line-height: 40px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+/****************************************/
+/******** CUSTOM BOOTSTRAP BADGE ********/
+/****************************************/
+
+.badge-custom {
+    background-color: rgb(225, 225, 225);
+    color: rgb(140, 140, 140) !important;
+}
+.badge-custom:hover {
+    background-color: rgb(50, 150, 200);
+    color: white !important;
+}
+.badge-custom.active {
+    background-color: rgb(50, 150, 200);
+    color: white !important;
+}
+.badge-sm {
+    font-size: 12px;
+}
+.badge-md {
+    font-size: 14px;
+}
+.badge-lg {
+    font-size: 16px;
+}
+.badge-inline {
+    margin-bottom: 10px;
+    margin-right: 10px;
+}
+
+/****************************************/
+/**************** RIBBON ****************/
+/****************************************/
+
+.ribbon {
+    position: absolute;
+    right: -5px;
+    top: -3px;
+    z-index: 1;
+    overflow: hidden;
+    width: 75px;
+    height: 75px;
+    text-align: right;
+}
+.ribbon span {
+    font-size: 10px;
+    font-weight: bold;
+    color: #FFF;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 20px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    width: 100px;
+    display: block;
+    background: rgb(56, 151, 198);
+    background: linear-gradient(rgb(56, 151, 198) 0%, rgb(56, 151, 198) 100%);
+    box-shadow: 0 3px 10px -5px rgba(0, 0, 0, 1);
+    position: absolute;
+    top: 19px; right: -21px;
+}
+.ribbon span::before {
+    content: "";
+    position: absolute; left: 0px; top: 100%;
+    z-index: -1;
+    border-left: 3px solid rgb(56, 151, 198);
+    border-right: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+    border-top: 3px solid #79A70A;
+}
+.ribbon span::after {
+    content: "";
+    position: absolute; right: 0px; top: 100%;
+    z-index: -1;
+    border-left: 3px solid transparent;
+    border-right: 3px solid rgb(56, 151, 198);
+    border-bottom: 3px solid transparent;
+    border-top: 3px solid rgb(56, 151, 198);
+}
+
+/****************************************/
+/******** CUSTOM BOOTSTRAP MODAL ********/
+/****************************************/
+
+.custom-modal {
+    z-index: 10;
+}
+.custom-modal .modal-header {
+    background-color: rgb(100, 160, 50);
+    color: white;
+    text-transform: uppercase;
+}
+.custom-modal .modal-footer {
+    background-color: #FAFAFA;
+}
+.modal {
+    overflow-y: scroll;
+}
+
+/****************************************/
+/******** CUSTOM BOOTSTRAP BUTTON *******/
+/****************************************/
+
+.btn-custom {
+    background-color: rgb(100, 160, 50);
+    color: white !important;
+}
+.btn-custom:hover {
+    background-color: rgb(80, 130, 35);
+}
+.btn-facebook {
+    background-color: rgb(60, 90, 150);
+    color: white !important;
+}
+.btn-facebook:hover {
+    background-color: rgb(80, 120, 190);
+}
+.btn-google {
+    background-color: rgb(220, 75, 65);
+    color: white !important;
+}
+.btn-google:hover {
+    background-color: rgb(240, 90, 80);
+}
+.btn-github {
+    background-color: rgb(85, 85, 85);
+    color: white !important;
+}
+.btn-github:hover {
+    background-color: rgb(100, 100, 100);
+}
+.btn-xs {
+    font-size: 10px;
+}
+
+/****************************************/
+/**************** TITLES ****************/
+/****************************************/
+
+.title {
+    color: rgb(50, 150, 200);
+    font-family: 'Oswald';
+    border-bottom: 1px solid rgb(100, 160, 50);
+    line-height: 50px;
+    margin-top: -20px;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+}
+.title2 {
+    font-family: 'Patua One', cursive;
+    text-transform: uppercase;
+}
+.sub-title {
+    font-family: Pattaya;
+    text-align: center;
+    opacity: 0.85;
+}
+
+/****************************************/
+/*************** ALERTS *****************/
+/****************************************/
+
+.alert-notification {
+    height: 40px;
+    line-height: 40px;
+    position: fixed;
+    margin-top: 20px;
+    right: 20px;
+    z-index: 1501;
+    opacity: 0.9;
+    font-size: 12px;
+    border-radius: 15px;
+}
+.alert-notification .alert-type {
+    padding-right: 10px;
+    padding-left: 10px;
+    background-color: rgb(50, 55, 60);
+    display: inline-block;
+    margin-right: -4px;
+    border-radius: 5px 0px 0px 5px;
+}
+.alert-notification .alert-content {
+    padding-right: 15px;
+    padding-left: 15px;
+    background-color: rgb(60, 65, 70);
+    display: inline-block;
+    color: white;
+    border-radius: 0px 5px 5px 0px;
+    min-width: 200px;
+}
+.alert-notification .alert-dismiss {
+    float: right;
+    margin-left: 20px;
+    color: silver;
+}
+
+/****************************************/
+/************* JUMBOTRON ****************/
+/****************************************/
+
+.jumbotron {
+    background-color: rgb(50, 150, 200);
+    height: 400px;
+    border-radius: 0px;
+    overflow: hidden;
+    margin-bottom: 40px;
+}
+.jumbotron .container {
+    padding: 30px;
+}
+.jumbotron .card {
+    z-index: 7;
+    width: 300px;
+    opacity: 0.95;
+    margin: auto;
+}
+.jumbotron .card img {
+    position: absolute;
+    top: -50px;
+    left: 100px;
+    height: 100px;
+    width:100px;
+}
+.jumbotron .card .card-title {
+    margin-top: 50px;
+    color: rgb(50, 150, 200);
+}
+.jumbotron .card .card-text {
+    margin-bottom: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.jumbotron .card .card-footer {
+    background-color: rgb(100, 160, 50);
+    color: white !important;
+}
+.jumbotron .card .card-footer:hover {
+    background-color: rgb(80, 130, 35);
+}
+
+/****************************************/
+/********** REGISTER BANNER *************/
+/****************************************/
+
+.register-banner {
+    background-color: rgb(50, 150, 200);
+    height: 60px;
+    border-top: 5px solid rgb(100, 160, 50);
+}
+.register-banner:hover {
+    background-color: rgb(40, 120, 160);
+    text-decoration: none;
+}
+.register-banner h3 {
+    color: white;
+    font-family: 'Oswald';
+    margin: auto;
+}
+
+/****************************************/
+/************* ACHIEVEMENTS *************/
+/****************************************/
+
+.achievements {
+    height: 295px;
+    overflow: scroll;
+}
+.achievements .award {
+    margin-bottom: 10px;
+}
+
+/****************************************/
+/*************** AVATARS ****************/
+/****************************************/
+
+.avatar-lg {
+    height: 100px;
+    width: 100px;
+}
+.avatar-md {
+    height: 50px;
+    width: 50px;
+}
+
+/****************************************/
+/*********** MESSAGING MODAL ************/
+/****************************************/
+
+#messagingModal {
+    position: sticky;
+    left: 100%;
+    max-width: 600px;
+    z-index: 0;
+    display: none;
+    bottom: 0;
+}
+#messagingModal .header {
+    background-color: rgb(64, 64, 64);
+    height: 40px;
+    line-height: 40px;
+    color: white;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+#messagingModal .body {
+    background-color: white;
+    border-left: 1px solid rgb(64, 64, 64);
+    border-right: 1px solid rgb(64, 64, 64);
+}
+#messagingModal .body .field {
+    width: 100%;
+}
+#messagingModal .body .field input {
+    padding-left: 10px;
+}
+#messagingModal .body .btn {
+    margin-bottom: 10px;
+    width: 98%;
+}
+
+/****************************************/
+/************ DISCUSSION BOX ************/
+/****************************************/
+
+.discussion-box {
+    padding-bottom: 20px;
+}
+.discussion-box .message .info {
+    margin-top: -10px;
+}
+.discussion-box .message .info a {
+    margin-right: 5px;
+    border-bottom: 1px solid lightgrey;
+    padding-bottom: 3px;
+    color: darkgrey;
+}
+.discussion-box .message .info a:hover {
+    color: rgb(50, 150, 200);
+    border-bottom: 1px solid rgb(50, 150, 200);
+}
+.discussion-box hr {
+    margin-left:-15px;
+    margin-right:-15px;
+}
+.discussion-box .message .content {
+    white-space: pre-wrap;
+}
+.discussion-box .message .attachment {
+    height: 80px;
+    width: 80px;
+}
+
+/****************************************/
+/************* BANNER HEADER ************/
+/****************************************/
+
+.banner-header img {
+    height: 300px;
+}
+.banner-header .banner-title {
+    margin-top: -80px;
+    background-color: black;
+    opacity: 0.7;
+}
+.banner-header .banner-title p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-family: 'Pattaya';
+    font-size: 40px;
+    color: white;
+    text-transform: uppercase;
+}
+.banner-header .btn-group .dropdown-menu a {
+    color: rgb(50, 150, 200);
+}
+.banner-header .btn-group .dropdown-menu a:active {
+    background-color: rgb(248, 249, 250);
+}
+.banner-header .btn-group button:first-child {
+    border-radius: 5px 0px 0px 5px;
+    border: 0px;
+}
+.banner-header .btn-group button:last-child {
+    border-radius: 0px 5px 5px 0px;
+    border: 0px;
+}
+.banner-header .btn-group button {
+    border-left: 1px solid silver;
+}
+
+/****************************************/
+/************* PUBLISH BOX *************/
+/****************************************/
+
+.publish-box {
+    border: 1px solid rgb(223, 223, 223);
+    border-radius: 5px;
+}
+.publish-box textarea {
+    border-radius: 0px;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+}
+.publish-box .editor {
+    font-size: 16px;
+    margin-left: 1px;
+    margin-bottom: 10px;
+    margin-right: 1px;
+}
+.publish-box .attachment {
+    height: 80px;
+    width: 80px;
+}
+
+/****************************************/
+/************ SPLIT CONTAINER ***********/
+/****************************************/
+
+.container-split {
+    background: rgb(50, 150, 200); /* Old browsers */
+    background: -moz-linear-gradient(left, rgb(100, 160, 50) 50%, rgb(50, 150, 200) 50%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(left, rgb(100, 160, 50) 50%, rgb(50, 150, 200) 50%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to right, rgb(100, 160, 50) 50%, rgb(50, 150, 200) 50%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='rgb(100, 160, 50)', endColorstr='rgb(50, 150, 200)', GradientType=1 ); /* IE6-9 */
+    position: relative;
+    overflow-x: auto;
+}
+.container-split .zigzagbg {
+    background-image: url(/images/test.png);
+    background-repeat: repeat-y;
+    background-position: center top;
+    height: 100%;
+    position: absolute;
+    right: 0;
+    left: 0;
+    top: 0;
+}
+.container-split .left-block {
+    display: inline-block;
+    margin-right: 30px;
+    min-height: 400px;
+    overflow-y: auto;
+    width: 550px;
+    text-align: left;
+    padding: 20px;
+    position: relative;
+    color: white;
+}
+.container-split .right-block {
+    display: inline-block;
+    margin-left: 30px;
+    min-height: 400px;
+    overflow-y: auto;
+    width: 550px;
+    text-align: left;
+    padding: 20px;
+    position: relative;
+    color: white;
+}
+@media only screen and (max-width: 991px) {
+    .container-split {
+        background: rgb(50, 150, 200);
+    }
+    .container-split .zigzagbg {
+        display: none;
+    }
+    .container-split .left-block {
+        margin-right: 0px;
+        width: 550px;
+    }
+    .container-split .right-block {
+        width: 550px;
+        margin-left: 0px;
+    }
+}
+@media only screen and (max-width: 767px) {
+    .container-split .left-block {
+        margin-right: 0px;
+        width: 100%;
+        padding: 25px;
+        min-height: auto;
+    }
+    .container-split .right-block {
+        width: 100%;
+        margin-left: 0px;
+        padding: 25px;
+        min-height: auto;
+    }
+}
+@media only screen and (max-width: 1199px) {
+    .container-split .left-block {
+        width: 460px;
+
+    }
+    .container-split .right-block {
+        width: 460px;
+
+    }
+}
+
+/****************************************/
+/*************** ARROW BAR **************/
+/****************************************/
+
+.arrowbar {
+    background-color: #212121;
+    text-align: center;
+}
+.arrowbar h2 {
+    font-size: 20px;
+    font-weight: 300;
+    color: rgba(255,255,255,1.00);
+    margin: 0px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    text-transform: uppercase;
+}
+.arrowbar.arrow-top {
+    position: relative;
+    background: #212121;
+}
+.arrowbar.arrow-top:after {
+    bottom: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(33, 33, 33, 0);
+    border-bottom-color: #212121;
+    border-width: 30px;
+    margin-left: -30px;
+}
+.arrow-bottom {
+    position: relative;
+    background: #212121;
+}
+.arrowbar.arrow-bottom:after {
+    top: 100%;
+    left: 50%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    border-color: rgba(33, 33, 33, 0);
+    border-top-color: #212121;
+    border-width: 30px;
+    margin-left: -30px;
+}
+
+/****************************************/
+/************** TYPOGRAPHY **************/
+/****************************************/
+
+.text-darkgrey {
+    color: rgb(71, 71, 71);
+}

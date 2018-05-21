@@ -1,0 +1,35 @@
+<ng-container *ngIf="subscriptions">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a [routerLink]="['/']">{{ 'PROJECTS.SUBSCRIPTIONS.home' | translate }}</a></li>
+            <li class="breadcrumb-item"><a [routerLink]="['/projects']">{{ 'PROJECTS.SUBSCRIPTIONS.projects' | translate }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ 'PROJECTS.SUBSCRIPTIONS.subscriptions' | translate }}: {{user.username}}</li>
+        </ol>
+    </nav>
+
+    <div class="page-header">
+        <h1><img class="d-none d-sm-inline" src="/images/mascot/{{pageHeaderImage}}" /> {{ 'PROJECTS.SUBSCRIPTIONS.subscriptions' | translate }}</h1>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 mb-5">
+                <table class="table table-striped">
+                    <tbody>
+                        <tr *ngFor="let project of subscriptions | paginate: { itemsPerPage: 10, currentPage: page }">
+                            <td [routerLink]="['/projects/' + project.address]">{{user.username}} {{ 'PROJECTS.SUBSCRIPTIONS.isSubscribedTo' | translate }} {{project.name}}</td>
+                            <td class="text-right" *ngIf="isSubscriber"><a (click)="onUnsubscribe(project)"><i class="fas fa-trash-alt"></i></a></td>
+                        </tr>
+                        <tr *ngIf="subscriptions.length == 0">
+                            <td class="text-center"><i>{{ 'PROJECTS.SUBSCRIPTIONS.noSubscriptions' | translate }}</i></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <br />
+                <p class="text-center"><pagination-controls [autoHide]="true" (pageChange)="page = $event"></pagination-controls></p>
+
+            </div>
+        </div>
+    </div>
+</ng-container>

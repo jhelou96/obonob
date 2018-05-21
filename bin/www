@@ -29,6 +29,21 @@ server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
+
+/**
+ * Socket.io configuration
+ */
+//Hashmap of sockets of all the logged in users with user ID as key --> Socket ID is added to hashmap after login operation
+var io = require('socket.io')(server);
+var sockets = {};
+app.set('sockets', sockets);
+app.set('socketio', io);
+
+//Establish connection with entering user
+io.on('connection', function (socket) {
+    socket.emit('socketId', socket.id); //Send socket ID to client
+});
+
 /**
  * Normalize a port into a number, string, or false.
  */

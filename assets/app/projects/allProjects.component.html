@@ -1,0 +1,69 @@
+<ng-container *ngIf="filteredProjects">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a [routerLink]="['/']">{{ 'PROJECTS.ALLPROJECTS.home' | translate }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ 'PROJECTS.ALLPROJECTS.projects' | translate }}</li>
+        </ol>
+    </nav>
+
+    <div class="page-header">
+        <h1><img class="d-none d-sm-inline" src="/images/mascot/{{pageHeaderImage}}" /> {{ 'PROJECTS.ALLPROJECTS.projects' | translate }}</h1>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 mb-5">
+                <div class="text-center">
+                    <a (click)="onChangeCategory('all', 1)" class="badge badge-custom badge-pill badge-md badge-inline" [ngClass]="{'active': activeCategory == 1}">{{ 'PROJECTS.CATEGORIES.all' | translate }}</a>
+                    <a (click)="onChangeCategory('artCulture', 2)" class="badge badge-custom badge-pill badge-md badge-inline" [ngClass]="{'active': activeCategory == 2}">{{ 'PROJECTS.CATEGORIES.artCulture' | translate }}</a>
+                    <a (click)="onChangeCategory('bdComics', 3)" class="badge badge-custom badge-pill badge-md badge-inline" [ngClass]="{'active': activeCategory == 3}">{{ 'PROJECTS.CATEGORIES.bdComics' | translate }}</a>
+                    <a (click)="onChangeCategory('cinema', 4)" class="badge badge-custom badge-pill badge-md badge-inline" [ngClass]="{'active': activeCategory == 4}">{{ 'PROJECTS.CATEGORIES.cinema' | translate }}</a>
+                    <a (click)="onChangeCategory('finance', 5)" class="badge badge-custom badge-pill badge-md badge-inline" [ngClass]="{'active': activeCategory == 5}">{{ 'PROJECTS.CATEGORIES.finance' | translate }}</a>
+                    <a (click)="onChangeCategory('food', 6)" class="badge badge-custom badge-pill badge-md badge-inline" [ngClass]="{'active': activeCategory == 6}">{{ 'PROJECTS.CATEGORIES.food' | translate }}</a>
+                    <a (click)="onChangeCategory('humor', 7)" class="badge badge-custom badge-pill badge-md badge-inline" [ngClass]="{'active': activeCategory == 7}">{{ 'PROJECTS.CATEGORIES.humor' | translate }}</a>
+                    <a (click)="onChangeCategory('videoGames', 8)" class="badge badge-custom badge-pill badge-md badge-inline" [ngClass]="{'active': activeCategory == 8}">{{ 'PROJECTS.CATEGORIES.videoGames' | translate }}</a>
+                    <a (click)="onChangeCategory('media', 9)" class="badge badge-custom badge-pill badge-md badge-inline" [ngClass]="{'active': activeCategory == 9}">{{ 'PROJECTS.CATEGORIES.media' | translate }}</a>
+                    <a (click)="onChangeCategory('music', 10)" class="badge badge-custom badge-pill badge-md badge-inline" [ngClass]="{'active': activeCategory == 10}">{{ 'PROJECTS.CATEGORIES.music' | translate }}</a>
+                    <a (click)="onChangeCategory('photo', 11)" class="badge badge-custom badge-pill badge-md badge-inline" [ngClass]="{'active': activeCategory == 11}">{{ 'PROJECTS.CATEGORIES.photo' | translate }}</a>
+                    <a (click)="onChangeCategory('healthWellBeing', 12)" class="badge badge-custom badge-pill badge-md badge-inline" [ngClass]="{'active': activeCategory == 12}">{{ 'PROJECTS.CATEGORIES.healthWellBeing' | translate }}</a>
+                    <a (click)="onChangeCategory('sciencesTechnologies', 13)" class="badge badge-custom badge-pill badge-md badge-inline" [ngClass]="{'active': activeCategory == 13}">{{ 'PROJECTS.CATEGORIES.sciencesTechnologies' | translate }}</a>
+                    <a (click)="onChangeCategory('sports', 14)" class="badge badge-custom badge-pill badge-md badge-inline" [ngClass]="{'active': activeCategory == 14}">{{ 'PROJECTS.CATEGORIES.sports' | translate }}</a>
+                    <a (click)="onChangeCategory('services', 15)" class="badge badge-custom badge-pill badge-md badge-inline" [ngClass]="{'active': activeCategory == 15}">{{ 'PROJECTS.CATEGORIES.services' | translate }}</a>
+                    <a (click)="onChangeCategory('others', 16)" class="badge badge-custom badge-pill badge-md badge-inline" [ngClass]="{'active': activeCategory == 16}">{{ 'PROJECTS.CATEGORIES.others' | translate }}</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3 mb-3" *ngFor="let project of filteredProjects | paginate: { itemsPerPage: 16, currentPage: page }">
+                <div class="project-box" [routerLink]="['/projects', project.address]">
+                    <div class="description">
+                        <img src="{{project.thumbnail}}" onError="this.onerror=null; this.src='/images/projects/no-image-available.jpg'">
+                        <div class="caption">
+                            <div class="blur"></div>
+                            <div class="caption-text">
+                                <h3>{{project.name}}</h3>
+                                <p>{{project.description}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="footer text-muted">
+                        <p class="float-left"><i class="fas fa-heart"></i> {{project.subscribers.length}} {{ 'PROJECTS.ALLPROJECTS.subscribers' | translate }} </p>
+                        <p class="float-right"><i class="fas fa-book"></i> {{ 'PROJECTS.CATEGORIES.' + project.category | translate }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-12 mb-3">
+                <div class="alert alert-secondary" role="alert" *ngIf="filteredProjects.length == 0">
+                    <strong>{{ 'PROJECTS.ALLPROJECTS.oops' | translate }}</strong> {{ 'PROJECTS.ALLPROJECTS.noProjects' | translate }}
+                </div>
+
+                <p class="text-center"><pagination-controls [autoHide]="true" (pageChange)="page = $event"></pagination-controls></p>
+            </div>
+        </div>
+
+    </div>
+</ng-container>

@@ -4,12 +4,15 @@ import {CommonModule} from "@angular/common";
 
 @NgModule({
     imports: [
-        CommonModule
+        CommonModule,
     ],
     providers: [
         AlertService
     ]
 })
+/**
+ * Alert module package
+ */
 export class AlertModule {
 
 }

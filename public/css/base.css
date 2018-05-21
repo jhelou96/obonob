@@ -1,0 +1,39 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-family: 'Montserrat';
+    font-size: 13px;
+    margin-bottom: 60px;
+}
+
+a {
+    transition: all 0.2s linear;
+    cursor: pointer;
+    color: rgb(50, 150, 200);
+}
+a:hover {
+    text-decoration: none;
+    color: rgb(100, 160, 50);
+}
+
+pre {
+    background: rgb(52, 58, 64) !important;
+    margin-left: -20px !important;
+    margin-right: -20px !important;
+}
+
+h4 {
+    color: rgb(100, 160, 50);
+    font-family: 'Oswald';
+    text-transform: uppercase;
+}
+
+table tr:hover {
+    cursor: pointer;
+}
+table.hoverable-cells td:hover {
+    background-color: rgb(240, 240, 240);
+}

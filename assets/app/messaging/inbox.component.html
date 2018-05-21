@@ -1,0 +1,63 @@
+<div *ngIf="discussionThreads" id="body-long">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a [routerLink]="['/']">{{ 'MESSAGING.INBOX.home' | translate }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ 'MESSAGING.INBOX.inbox' | translate }}</li>
+        </ol>
+    </nav>
+
+    <div class="page-header">
+        <h1><img class="d-none d-sm-inline" src="/images/mascot/{{pageHeaderImage}}" /> {{ 'MESSAGING.INBOX.inbox' | translate }}</h1>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <p class="text-right"><button class="btn btn-sm btn-info" (click)="onNewThread()"><i class="fas fa-envelope"></i> {{ 'MESSAGING.INBOX.newMessage' | translate }}</button></p>
+                <table class="table table-hover">
+                    <tbody>
+                        <tr *ngFor="let thread of discussionThreads | paginate: { itemsPerPage: 10, currentPage: page }" [routerLink]="['/messaging', thread.id]" [ngClass]="{'table-secondary': !thread.isRead}">
+                            <th scope="row"><i class="fas fa-star" *ngIf="!thread.isRead"></i> <i class="far fa-star" *ngIf="thread.isRead"></i></th>
+                            <td>{{thread.author.username}}</td>
+                            <td>{{thread.subject}}</td>
+                            <td class="text-right" *ngIf="dateThreshold(thread.messages[0].date) >= 1">{{thread.messages[0].date | amDateFormat:'LL'}}</td>
+                            <td class="text-right" *ngIf="dateThreshold(thread.messages[0].date) < 1">{{thread.messages[0].date | amTimeAgo}}</td>
+                        </tr>
+                        <tr *ngIf="discussionThreads.length == 0" class="table-secondary">
+                            <td class="text-center">{{ 'MESSAGING.INBOX.emptyInbox' | translate }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <br />
+        <p class="text-center"><pagination-controls [autoHide]="true" (pageChange)="page = $event"></pagination-controls></p>
+    </div>
+</div>
+
+<div id="messagingModal">
+    <div class="header">
+        <p class="float-left">{{ 'MESSAGING.INBOX.newDiscussionThread' | translate }}</p>
+        <p class="float-right">
+            <a (click)="onToggleMessagingModal()"><i class="fas fa-minus-circle"></i></a>&nbsp;
+            <a (click)="onHideMessagingModal()"><i class="fas fa-times-circle"></i></a>
+        </p>
+    </div>
+    <div class="body">
+        <form [formGroup]="newThreadForm" (submit)="newThread()" ngNativeValidate *ngIf="newThreadForm">
+            <mat-form-field class="field">
+                <input matInput placeholder="&nbsp; {{ 'MESSAGING.INBOX.subject' | translate }}" formControlName="subject" required>
+            </mat-form-field>
+            <mat-form-field class="field">
+                <input matInput placeholder="&nbsp; {{ 'MESSAGING.INBOX.recipient' | translate }}" [matAutocomplete]="auto" [formControl]="recipientsCtrl" formControlName="recipient" required>
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let user of filteredUsers | async" [value]="user.username">
+                        <span>{{ user.username }}</span>
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+            <md-editor formControlName="content" [options]="markdownEditorOptions" required></md-editor>
+            <p align="center"><button type="submit" class="btn btn-info btn-sm" [disabled]="!newThreadForm.valid">{{ 'MESSAGING.INBOX.send' | translate }}</button></p>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,36 @@
+<ng-container *ngIf="projects">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a [routerLink]="['/']">{{ 'PROJECTS.USERPROJECTS.home' | translate }}</a></li>
+            <li class="breadcrumb-item"><a [routerLink]="['/projects']">{{ 'PROJECTS.USERPROJECTS.projects' | translate }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{user.username}}</li>
+        </ol>
+    </nav>
+
+    <div class="page-header">
+        <h1><img class="d-none d-sm-inline" src="/images/mascot/{{pageHeaderImage}}" /> {{ 'PROJECTS.USERPROJECTS.userProjects' | translate }}</h1>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 project-box" *ngFor="let project of projects">
+                <div class="description">
+                    <a [routerLink]="['/projects/', project.address]">
+                        <img src="{{project.thumbnail}}" onError="this.onerror=null; this.src='/images/projects/no-image-available.jpg'" />
+                        <div class="caption">
+                            <div class="blur"></div>
+                            <div class="caption-text">
+                                <h3>{{project.name}}</h3>
+                                <p>{{project.description}}</p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="footer text-muted">
+                    <p class="float-left"><i class="fas fa-heart"></i> {{project.subscribers.length}} {{ 'STATIC.HOME.subscribers' | translate }} </p>
+                    <p class="float-right"><i class="fas fa-book"></i> {{ 'PROJECTS.CATEGORIES.' + project.category | translate }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

@@ -1,0 +1,117 @@
+<ng-container *ngIf="user">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a [routerLink]="['/']">{{ 'AUTH.PROFILE.home' | translate }}</a></li>
+            <li class="breadcrumb-item"><a [routerLink]="['/']">{{ 'AUTH.PROFILE.members' | translate }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{user.username}}</li>
+        </ol>
+    </nav>
+
+    <div class="page-header">
+        <h1><img class="d-none d-sm-inline" src="/images/mascot/{{pageHeaderImage}}" /> {{user.username}}</h1>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-5">
+                <h3 class="title">{{ 'AUTH.PROFILE.profile' | translate }}: {{user.username}}</h3>
+
+                <div class="card">
+                    <div class="card-body text-center member">
+                        <img src="{{user.avatar}}" class="rounded-circle avatar-lg" onError="this.onerror=null;this.src='/images/default-avatar.png';" />
+                        <br /><br />
+                        <ng-container *ngIf="isOnline()">
+                            <span class="livicon-evo" data-options=" name: circle.svg; style: solid; size: 14px; solidColor: #4b9a46; animated: false "></span>
+                            <span>{{user.username}} {{ 'AUTH.PROFILE.isOnline' | translate }}</span>
+                        </ng-container>
+                        <ng-container *ngIf="!isOnline()">
+                            <span class="livicon-evo svg-icon-inline" data-options=" name: circle.svg; style: solid; size: 14px; solidColor: #bf4242; animated: false "></span>
+                            <span>{{user.username}} {{ 'AUTH.PROFILE.isOffline' | translate }}</span>
+                        </ng-container>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">
+                            Statut:
+                            <span class="badge badge-info badge-md float-right" *ngIf="user.level == 0 || user.level == 1">{{ 'AUTH.PROFILE.member' | translate }}</span>
+                            <span class="badge badge-success badge-md float-right" *ngIf="user.level == 2">{{ 'AUTH.PROFILE.moderator' | translate }}}}</span>
+                            <span class="badge badge-danger badge-md float-right" *ngIf="user.level == 3">{{ 'AUTH.PROFILE.administrator' | translate }}</span>
+                            <span class="badge badge-danger badge-md float-right" *ngIf="user.level == -1">{{ 'AUTH.PROFILE.banned' | translate }}</span>
+                        </li>
+                        <li class="list-group-item">{{ 'AUTH.PROFILE.registration' | translate }}: <span class="float-right">{{user.registrationDate | amDateFormat:'LL'}}</span></li>
+                        <li class="list-group-item">
+                            {{ 'AUTH.PROFILE.lastConnection' | translate }}:
+                            <span class="float-right" *ngIf="dateThreshold(user.lastActionDate) >= 1">{{user.lastActionDate | amDateFormat:'LL'}}</span>
+                            <span class="float-right" *ngIf="dateThreshold(user.lastActionDate) < 1">{{user.lastActionDate | amTimeAgo}}</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-8 mb-5">
+                <h3 class="title">{{ 'AUTH.PROFILE.achievements' | translate }}</h3>
+
+                <div class="card achievements">
+                    <div class="ribbon"><span>SOON</span></div>
+                    <div class="card-body isDisabled">
+                        <div class="row">
+                            <div class="col award">
+                                <img src="https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Medal-2-64.png" />
+                            </div>
+                            <div class="col">
+                                <img src="https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Medal-2-64.png" />
+                            </div>
+                            <div class="col">
+                                <img src="https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Medal-2-64.png" />
+                            </div>
+                            <div class="col">
+                                <img src="https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Medal-2-64.png" />
+                            </div>
+                            <div class="col">
+                                <img src="https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Medal-2-64.png" />
+                            </div>
+                            <div class="col">
+                                <img src="https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Medal-2-64.png" />
+                            </div>
+                            <div class="col">
+                                <img src="https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Medal-2-64.png" />
+                            </div>
+                            <div class="col">
+                                <img src="https://cdn0.iconfinder.com/data/icons/kameleon-free-pack-rounded/110/Medal-2-64.png" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br /><br />
+        <div class="row">
+            <div class="col-sm-12">
+                <h3 class="title">{{ 'AUTH.PROFILE.learnMore' | translate }}</h3>
+
+                <div class="row">
+                    <div class="col-md-8 mb-5">
+                        <div class="card">
+                            <div class="card-header"><i class="far fa-file-alt"></i> {{ 'AUTH.PROFILE.biography' | translate }}</div>
+                            <div class="card-body">
+                                <markdown [data]="user.biography" *ngIf="user.biography && user.biography.length > 0"></markdown>
+                                <div class="alert alert-secondary" role="alert" *ngIf="!user.biography || user.biography.length == 0">
+                                    <strong>{{ 'AUTH.PROFILE.oops' | translate }}</strong> {{ 'AUTH.PROFILE.emptySection' | translate }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-5">
+                        <button class="btn btn-custom btn-block" [routerLink]="['/projects/users/', user.username]"><i class="fas fa-code"></i> {{ 'AUTH.PROFILE.seeHisProjects' | translate }}</button>
+                        <br />
+                        <button class="btn btn-info btn-block" [routerLink]="['/projects/users', user.username, 'activity']"><i class="fas fa-globe"></i> {{ 'AUTH.PROFILE.activityOnProjects' | translate }}</button>
+                        <br />
+                        <button class="btn btn-warning btn-block text-white" [routerLink]="['/projects/users', user.username, 'subscriptions']"><i class="fas fa-users"></i> {{ 'AUTH.PROFILE.seeHisSubscriptions' | translate }}</button>
+                        <br />
+                        <button class="btn btn-secondary btn-block"><i class="fas fa-comments"></i> {{ 'AUTH.PROFILE.activityOnForums' | translate }}</button>
+                        <br />
+                        <button class="btn btn-light btn-block"><i class="fas fa-newspaper"></i> {{ 'AUTH.PROFILE.seeHisArticles' | translate }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>

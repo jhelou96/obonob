@@ -1,7 +1,7 @@
-<div class="alert-notification">
+<div class="alert-notification" *ngIf="visible" [@slideInOut]>
     <div class="alert-type">
-        <img *ngIf="alert && alert.type == 'error'" src="https://cdn3.iconfinder.com/data/icons/flatastic-10-2/256/trafficlight_red-16.png" />
-        <img *ngIf="alert && alert.type == 'success'" src="https://cdn0.iconfinder.com/data/icons/add-delete/256/add-1-0-16.png" />
+        <img *ngIf="alert && alert.type == 'error'" src="/images/alerts/error.png" />
+        <img *ngIf="alert && alert.type == 'success'" src="/images/alerts/success.png" />
     </div>
     <div class="alert-content">
         {{ alert?.message }}

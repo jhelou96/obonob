@@ -1,0 +1,40 @@
+<ng-container *ngIf="activity">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a [routerLink]="['/']">{{ 'PROJECTS.ACTIVITY.home' | translate }}</a></li>
+            <li class="breadcrumb-item"><a [routerLink]="['/projects']">{{ 'PROJECTS.ACTIVITY.projects' | translate }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ 'PROJECTS.ACTIVITY.activity' | translate }}: {{user.username}}</li>
+        </ol>
+    </nav>
+
+    <div class="page-header">
+        <h1><img class="d-none d-sm-inline" src="/images/mascot/{{pageHeaderImage}}" /> {{ 'PROJECTS.ACTIVITY.activity' | translate }}</h1>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 mb-3">
+                <table class="table table-striped">
+                    <tbody>
+                        <ng-container *ngFor="let x of activity | paginate: { itemsPerPage: 10, currentPage: page }">
+                            <tr [routerLink]="['/projects/' + x.address]">
+                                <td *ngIf="x.type == 0">{{user.username}} {{ 'PROJECTS.ACTIVITY.publishedPost' | translate }} {{x.name}}</td>
+                                <td *ngIf="x.type == 1">{{user.username}} {{ 'PROJECTS.ACTIVITY.repliedToPost' | translate }} {{x.name}}</td>
+                                <td *ngIf="x.type == 2">{{user.username}} {{ 'PROJECTS.ACTIVITY.publishedReview' | translate }} {{x.name}}</td>
+                                <td class="text-right" *ngIf="dateThreshold(x.date) >= 1" [routerLink]="['/projects/' + x.address]">{{x.date | amDateFormat:'LL'}}</td>
+                                <td class="text-right" *ngIf="dateThreshold(x.date) < 1" [routerLink]="['/projects/' + x.address]">{{x.date | amTimeAgo}}</td>
+                            </tr>
+                        </ng-container>
+                        <tr *ngIf="activity.length == 0">
+                            <td class="text-center"><i>{{ 'PROJECTS.ACTIVITY.noActivity' | translate }}</i></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <br />
+                <p class="text-center"><pagination-controls [autoHide]="true" (pageChange)="page = $event"></pagination-controls></p>
+
+            </div>
+        </div>
+    </div>
+</ng-container>

@@ -1,0 +1,697 @@
+<div id="body-lightgrey" *ngIf="project">
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-lg-2 mb-3">
+                <div class="sideMenu noHeaderPage">
+                    <div class="card text-center">
+                        <div class="ribbon"><span>SOON</span></div>
+                        <div class="isBlurred">
+                            <div class="card-body">
+                                <h5>4301$</h5>
+                                <small class="text-muted">From 213 contributors</small>
+                            </div>
+                            <div class="card-footer">
+                                <button class="btn btn-info">Donate</button><br />
+                                <small class="text-muted"><i class="fas fa-shield-alt"></i> Secured payement</small>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <div class="card text-center">
+                        <img class="card-img-top" src="{{project.thumbnail}}" onError="this.onerror=null; this.src='/images/projects/no-image-available.jpg'" />
+                        <div class="card-body">
+                            <span>{{project.description}}</span>
+                            <div class="d-flex justify-content-center align-content-center"><bar-rating [rate]="rating" [readOnly]="true"></bar-rating></div>
+                            <small class="text-muted">{{ 'PROJECTS.PROJECT.basedOn' | translate }} {{project.reviews.length}} {{ 'PROJECTS.PROJECT.userEvaluation' | translate }} <span *ngIf="project.reviews.length > 1">s</span></small>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-info" (click)="onViewReviews()">{{ 'PROJECTS.PROJECT.evaluate' | translate }}</button><br />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-10 mb-3">
+                <div class="row">
+                    <div class="col-lg-12 mb-3">
+                        <div class="card banner-header">
+                            <img class="card-img-top" src="{{project.banner}}" onError="this.onerror=null;this.src='/images/projects/banner.png';">
+                            <div class="banner-title">
+                                <p class="text-center">{{project.name}}</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-sm-10">
+                                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                            <button type="button" class="btn btn-light btn-sm" [disabled]="isAuthor" *ngIf="!isSubscribed()" (click)="onSubscribe()"><i class="far fa-heart"></i> {{ 'PROJECTS.PROJECT.subscribe' | translate }} <span *ngIf="nbSubscribers > 0">{{nbSubscribers}}</span></button>
+                                            <button type="button" class="btn btn-light btn-sm" [disabled]="isAuthor" *ngIf="isSubscribed()" (click)="onUnsubscribe()"><i class="far fa-heart"></i> {{ 'PROJECTS.PROJECT.unsubscribe' | translate }} <span *ngIf="nbSubscribers > 0">{{nbSubscribers}}</span></button>
+                                            <button type="button" class="btn btn-light btn-sm" (click)="onViewShareButtons()"><i class="far fa-share-square"></i> {{ 'PROJECTS.PROJECT.share' | translate }}</button>
+                                            <button id="btnGroupDrop1" type="button" class="btn btn-light btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                ...
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" (click)="onEditProjectInfo()" *ngIf="isAuthor">{{ 'PROJECTS.PROJECT.modifyPageInfo' | translate }}</a>
+                                                <a class="dropdown-item" [routerLink]="['/auth/profile/', project.author.username]">{{ 'PROJECTS.PROJECT.authorInfo' | translate }}</a>
+                                                <a class="dropdown-item" href="#">{{ 'PROJECTS.PROJECT.report' | translate }}</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2" *ngIf="project.website">
+                                        <a href="{{project.website}}" class="btn btn-custom btn-sm float-right" ><i class="fas fa-globe"></i> {{ 'PROJECTS.PROJECT.website' | translate }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-lg-8 mb-4">
+                        <ul class="nav custom-nav nav-tabs nav-justified" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#wall" role="tab" aria-controls="home" aria-selected="true">
+                                    <div class="row">
+                                        <div class="col-sm-2 my-auto">
+                                            <h5><i class="fas fa-bullhorn"></i></h5>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <span>{{ 'PROJECTS.PROJECT.news' | translate }}</span> <br />
+                                            <small class="text-muted">{{ 'PROJECTS.PROJECT.stayTuned' | translate }}</small>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#about" role="tab" aria-controls="profile" aria-selected="false">
+                                    <div class="row">
+                                        <div class="col-sm-2 my-auto">
+                                            <h5><i class="fas fa-file-alt"></i></h5>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <span>{{ 'PROJECTS.PROJECT.presentation' | translate }}</span> <br />
+                                            <small class="text-muted">{{ 'PROJECTS.PROJECT.learnMore' | translate }}</small>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#medias" role="tab" aria-controls="contact" aria-selected="false">
+                                    <div class="row">
+                                        <div class="col-sm-2 my-auto">
+                                            <h5><i class="fas fa-images"></i></h5>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <span>{{ 'PROJECTS.PROJECT.media' | translate }}</span> <br />
+                                            <small class="text-muted">{{ 'PROJECTS.PROJECT.projectPreview' | translate }}</small>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#activity" role="tab" aria-controls="contact" aria-selected="false">
+                                    <div class="row">
+                                        <div class="col-sm-2 my-auto">
+                                            <h5><i class="fas fa-calendar-alt"></i></h5>
+                                        </div>
+                                        <div class="col-sm-10">
+                                            <span>{{ 'PROJECTS.PROJECT.events' | translate }}</span> <br />
+                                            <small class="text-muted">{{ 'PROJECTS.PROJECT.aroundTheProject' | translate }}</small>
+                                        </div>
+                                    </div>
+                                </a>
+                            </li>
+                        </ul>
+                        <br />
+                        <div class="tab-content">
+                            <div id="wall" class="tab-pane container-fluid active">
+                                <div class="row">
+                                    <div class="col-lg-12 mb-3">
+                                        <div class="alert alert-secondary" role="alert" *ngIf="project.posts.length == 0">
+                                            <strong>{{ 'PROJECTS.PROJECT.oops' | translate }}</strong> {{ 'PROJECTS.PROJECT.emptySection' | translate }}
+                                        </div>
+
+                                        <div class="publish-box" *ngIf="isAuthor">
+                                            <form [formGroup]="addPostForm" (submit)="addPost()" ngNativeValidate *ngIf="addPostForm">
+                                                <div class="form-group">
+                                                    <textarea class="form-control" placeholder="{{ 'PROJECTS.PROJECT.writePost' | translate }}" rows="3" formControlName="content"></textarea>
+                                                </div>
+                                                <div *ngIf="addPostFormMedia.length > 0">
+                                                    <div class="row">
+                                                        <div class="col-sm-2 mb-3 text-center" *ngFor="let media of addPostFormMedia; let i = index">
+                                                            <a (click)="onRemovePostImage(i)" class="text-center"><img src="{{media.src}}" class="attachment" *ngIf="media.type == 'image'" /></a>
+                                                        </div>
+                                                    </div>
+                                                    <hr />
+                                                </div>
+                                                <div class="row flex-nowrap editor">
+                                                    <div class="col-sm-1">
+                                                        <a data-toggle="tooltip" data-placement="top" title="{{ 'PROJECTS.PROJECT.addImage' | translate }}" (click)="onAddPostImage()"><i class="far fa-images"></i></a>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <a data-toggle="tooltip" data-placement="top" title="{{ 'PROJECTS.PROJECT.addVideo' | translate }}" class="isDisabled"><i class="far fa-file-video"></i></a>
+                                                    </div>
+                                                    <div class="col-sm-1">
+                                                        <a data-toggle="tooltip" data-placement="top" title="{{ 'PROJECTS.PROJECT.emoji' | translate }}" class="isDisabled"><i class="far fa-smile"></i></a>
+                                                    </div>
+                                                    <div class="col-sm-2 offset-sm-7 text-right">
+                                                        <button type="submit" class="btn btn-info btn-sm" [disabled]="!addPostForm.valid"><i class="fas fa-pencil-alt"></i> {{ 'PROJECTS.PROJECT.publish' | translate }}</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="discussion-box" *ngFor="let post of project.posts">
+                                    <div class="card message">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-1 my-auto mb-3 d-none d-sm-inline">
+                                                    <a [routerLink]="['/auth/profile/', post.author.username]" class="text-center"><img src="{{post.author.avatar}}" class="rounded-circle avatar-md" onError="this.onerror=null;this.src='/images/default-avatar';" /></a>
+                                                </div>
+                                                <div class="col-sm-11 mb-3">
+                                                    <p class="float-left info"><a [routerLink]="['/auth/profile/', post.author.username]">{{post.author.username}}</a></p>
+                                                    <p class="float-right text-muted" *ngIf="dateThreshold(post.date) >= 1">{{post.date | amDateFormat:'LL'}}</p>
+                                                    <p class="float-right text-muted" *ngIf="dateThreshold(post.date) < 1">{{post.date | amTimeAgo}}</p>
+
+                                                    <br /><br />
+
+                                                    <span class="content text-justify">{{post.content}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="row" *ngIf="post.media.length > 0">
+                                                <div class="col-sm-11 offset-sm-1">
+                                                    <hr />
+                                                    <div class="row">
+                                                        <div class="col-sm-1" *ngFor="let media of post.media; let i = index">
+                                                            <a data-fancybox [attr.data-fancybox]="'gallery' + i" href="{{media.src}}">
+                                                                <img class="attachment" src="{{media.src}}" />
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="row flex-nowrap no-gutters">
+                                                <div class="col-sm-1">
+                                                    <a (click)="onShowPostReplies(post.id)" data-toggle="tooltip" data-placement="top" title="{{ 'PROJECTS.PROJECT.showReplies' | translate }}"><i class="far fa-comment"></i> &nbsp;<span class="text-muted" *ngIf="post.replies.length > 0">{{post.replies.length}}</span></a>
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <a (click)="onPostLike(post)" data-toggle="tooltip" data-placement="top" title="{{ 'PROJECTS.PROJECT.like' | translate }}"><i class="far fa-heart"></i> &nbsp;<span class="text-muted" *ngIf="post.likes.length > 0">{{post.likes.length}}</span></a>
+                                                </div>
+                                                <div class="col-sm-1 offset-sm-9 text-right">
+                                                    <a *ngIf="isAuthor" (click)="onRemovePost(post)" data-toggle="tooltip" data-placement="top" title="{{ 'PROJECTS.PROJECT.deletePost' | translate }}"><i class="far fa-trash-alt"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="modal custom-modal replies" id="postReplies-{{post.id}}">
+                                        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title">{{ 'PROJECTS.PROJECT.discussion' | translate }}</h5>
+                                                    <button type="button" class="close" (click)="onHidePostRepliesModal(post.id)" aria-label="Close">
+                                                        <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="alert alert-secondary" role="alert" *ngIf="post.replies.length == 0 && !isLoggedIn()">
+                                                        <strong>{{ 'PROJECTS.PROJECT.oops' | translate }}</strong> {{ 'PROJECTS.PROJECT.emptySection' | translate }}
+                                                    </div>
+                                                    <form [formGroup]="addPostReplyForm" (submit)="addPostReply(post)" ngNativeValidate *ngIf="addPostReplyForm && isLoggedIn()">
+                                                        <div class="input-group mb-3">
+                                                            <textarea class="form-control" placeholder="{{ 'PROJECTS.PROJECT.writeAnswer' | translate }}" rows="3" formControlName="content"></textarea>
+                                                        </div>
+                                                        <p class="text-right"><button type="submit" class="btn btn-info" [disabled]="!addPostReplyForm.valid">{{ 'PROJECTS.PROJECT.submit' | translate }}</button></p>
+                                                    </form>
+                                                    <div class="message" *ngFor="let reply of post.replies; let i = index">
+                                                        <hr *ngIf="(i > 0) || isAuthor" />
+                                                        <div class="row">
+                                                            <div class="col-sm-2 my-auto text-center">
+                                                                <a [routerLink]="['/auth/profile/', reply.author.username]" (click)="onHidePostRepliesModal(post.id)"><img src="{{reply.author.avatar}}" class="rounded-circle avatar" onError="this.onerror=null;this.src='/images/default-avatar.png';" style="height: 50px;"/></a> <br /><br />
+                                                                <a (click)="onRemovePostReply(post, reply)" *ngIf="isLoggedIn() && reply.author.username == user.username"><i class="far fa-trash-alt"></i></a>
+                                                            </div>
+                                                            <div class="col-sm-10">
+                                                                <p class="float-left info"><a [routerLink]="['/auth/profile/', reply.author.username]" (click)="onHidePostRepliesModal(post.id)">{{reply.author.username}}</a></p>
+                                                                <p class="float-right text-muted" *ngIf="dateThreshold(reply.date) >= 1">{{reply.date | amDateFormat:'LL'}}</p>
+                                                                <p class="float-right text-muted" *ngIf="dateThreshold(reply.date) < 1">{{reply.date | amTimeAgo}}</p>
+                                                                <br /><br />
+                                                                <p class="text-justify" style="white-space: pre-wrap;">{{reply.content}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="about" class="tab-pane container-fluid">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="alert alert-secondary" role="alert" *ngIf="!project.about">
+                                            <strong>{{ 'PROJECTS.PROJECT.oops' | translate }}</strong> {{ 'PROJECTS.PROJECT.emptySection' | translate }}
+                                        </div>
+                                    </div>
+
+                                    <div [ngClass]="(isOnSocialMedias || isAuthor) ? 'col-lg-8' : 'col-lg-12'">
+                                        <markdown [data]="project.about?.about" ></markdown>
+                                    </div>
+                                    <div class="col-lg-4 sideMenu" style="height: 100%;" *ngIf="isAuthor || isOnSocialMedias">
+                                        <div class="card" *ngIf="isOnSocialMedias">
+                                            <ul class="list-group list-group-flush text-muted">
+                                                <li class="list-group-item" *ngIf="project.about?.twitter">
+                                                    <i class="fab fa-twitter"></i> {{ 'PROJECTS.PROJECT.followOn' | translate }} <a href="{{project.about.twitter}}">Twitter</a>
+                                                </li>
+                                                <li class="list-group-item" *ngIf="project.about?.facebook">
+                                                    <i class="fab fa-facebook-f"></i> {{ 'PROJECTS.PROJECT.likeOn' | translate }} <a href="{{project.about.facebook}}">Facebook</a>
+                                                </li>
+                                                <li class="list-group-item" *ngIf="project.about?.youtube">
+                                                    <i class="fab fa-youtube"></i> {{ 'PROJECTS.PROJECT.subscribeOn' | translate }} <a href="{{project.about.youtube}}">Youtube</a>
+                                                </li>
+                                                <li class="list-group-item" *ngIf="project.about?.github">
+                                                    <i class="fab fa-github"></i> {{ 'PROJECTS.PROJECT.contributeOn' | translate }} <a href="{{project.about.github}}">GitHub</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <br />
+                                        <button *ngIf="isAuthor" class="btn btn-info btn-block" (click)="onEditAboutSection()"><i class="fas fa-pencil-alt"></i> {{ 'PROJECTS.PROJECT.edit' | translate }}</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="medias" class="tab-pane container-fluid">
+                                <p *ngIf="isAuthor" class="text-right">
+                                    <button class="btn btn-info btn-sm" (click)="onAddImageMedia()"><i class="fas fa-plus-circle"></i> {{ 'PROJECTS.PROJECT.image' | translate }}</button>
+                                    <button class="btn btn-custom btn-sm" disabled><i class="fas fa-plus-circle"></i> {{ 'PROJECTS.PROJECT.video' | translate }}</button>
+                                </p>
+                                <div class="row">
+                                    <div class="col-sm-12" *ngIf="project?.media.length == 0">
+                                        <div class="alert alert-secondary" role="alert">
+                                            <strong>{{ 'PROJECTS.PROJECT.oops' | translate }}</strong> {{ 'PROJECTS.PROJECT.emptySection' | translate }}
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3" *ngFor="let media of project.media">
+                                        <div *ngIf="media.type == 'image'">
+                                            <a data-fancybox data-fancybox="gallery" href="{{media.src}}" [attr.data-caption]="media.caption">
+                                                <img src="{{media.src}}" class="img-fluid" onError="this.onerror=null;this.src='/images/projects/image-soon.png';" />
+                                            </a>
+                                        </div>
+                                        <div *ngIf="media.type == 'video'">
+                                        </div>
+                                        <p *ngIf="isAuthor" class="text-center"><a (click)="onRemoveMedia(media)">{{ 'PROJECTS.PROJECT.delete' | translate }}</a></p>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="activity" class="tab-pane container-fluid">
+                                <form class="form-row text-center" [formGroup]="newEventForm" (submit)="onAddNewEvent()" ngNativeValidate *ngIf="newEventForm && isAuthor">
+                                    <div class="col-sm-5">
+                                        <mat-form-field style="width: 100%;">
+                                            <input matInput placeholder="{{ 'PROJECTS.PROJECT.eventDescription' | translate }}" formControlName="description" required>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-sm-5">
+                                        <mat-form-field style="width: 100%;">
+                                            <input matInput [matDatepickerFilter]="datepickerFilter" [matDatepicker]="myDatepicker" placeholder="{{ 'PROJECTS.PROJECT.eventDate' | translate }}" formControlName="date" required>
+                                            <mat-datepicker-toggle matSuffix [for]="myDatepicker"></mat-datepicker-toggle>
+                                            <mat-datepicker #myDatepicker></mat-datepicker>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <button type="submit" mat-button>{{ 'PROJECTS.PROJECT.newEvent' | translate }}</button>
+                                    </div>
+                                </form>
+
+                                <div class="row">
+                                    <div class="col-sm-1">
+                                        <a (click)="onCalendarPrevMonth()"><i class="fas fa-angle-double-left"></i></a>
+                                    </div>
+                                    <div class="col-sm-10 text-center">
+                                        <h3>{{calendarYear + "-" + ((calendarMonth < 10) ? "0" : "") + calendarMonth + "-01" |  amDateFormat:'MMMM YYYY'}}</h3>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <a (click)="onCalendarNextMonth()"><i class="fas fa-angle-double-right"></i></a>
+                                    </div>
+                                </div>
+                                <table class="table calendar hoverable-cells text-center">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">{{ 'PROJECTS.PROJECT.monday' | translate }}</th>
+                                        <th scope="col">{{ 'PROJECTS.PROJECT.tuesday' | translate }}</th>
+                                        <th scope="col">{{ 'PROJECTS.PROJECT.wednesday' | translate }}</th>
+                                        <th scope="col">{{ 'PROJECTS.PROJECT.thursday' | translate }}</th>
+                                        <th scope="col">{{ 'PROJECTS.PROJECT.friday' | translate }}</th>
+                                        <th scope="col">{{ 'PROJECTS.PROJECT.saturday' | translate }}</th>
+                                        <th scope="col">{{ 'PROJECTS.PROJECT.sunday' | translate }}</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="table-bordered">
+                                        <tr *ngFor="let week of calendarDays">
+                                            <td class="align-middle" *ngFor="let day of week" [ngClass]="{'isDisabled' : !day[1], 'isTodayDate' : day[2]}" (click)="onViewEvents(day)">
+                                                {{day[0]}}
+                                                <div *ngIf="day[3]">
+                                                    <div class="livicon-evo svg-icon-center" data-options=" name: circle.svg; style: filled; size: 16px; strokeColor: #2e8d1e; fillColor: #1fb623; animated: false" *ngIf="!day[3][0].isExpired"></div>
+                                                    <div class="livicon-evo svg-icon-center" data-options=" name: circle.svg; style: filled; size: 16px; strokeColor: #902a2a; fillColor: #e32b2b; animated: false" *ngIf="day[3][0].isExpired"></div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <ul class="list-group list-group-flush" *ngIf="calendarEventsVisible">
+                                    <li class="list-group-item" *ngFor="let event of calendarEvents">{{event.description}}<a class="float-right" (click)="onRemoveEvent(event)" *ngIf="isAuthor"><i class="far fa-trash-alt"></i></a></li>
+                                </ul>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                        <div class="sideMenu noHeaderPage">
+                            <div class="card sponsored text-center">
+                                <div class="card-header">{{ 'PROJECTS.PROJECT.suggestion' | translate }}</div>
+                                <div class="card-body">
+                                    <img src="https://bootstrap-themes.github.io/application/assets/img/instagram_2.jpg" /> <br />
+                                    <p><strong>Budgey</strong></p>
+                                    <span>Logiciel de gestion de budget</span><br /><br />
+                                    <span><button type="button" class="btn btn-outline-info btn-sm">{{ 'PROJECTS.PROJECT.learnMore' | translate }}</button></span>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="card">
+                                <div class="card-header">{{ 'PROJECTS.PROJECT.partners' | translate }} <small>&bull; <a (click)="onViewListPartnerPages()">{{ 'PROJECTS.PROJECT.viewAll' | translate }}</a></small> <a (click)="onUpdatePartnerPages()" class="float-right" *ngIf="isAuthor"><i class="fas fa-pencil-alt"></i></a></div>
+                                <div class="card-body">
+                                    <div class="alert alert-secondary" role="alert" *ngIf="project.partners.length == 0">
+                                        <strong>{{ 'PROJECTS.PROJECT.oops' | translate }}</strong> {{ 'PROJECTS.PROJECT.emptySection' | translate }}
+                                    </div>
+                                    <div class="list" *ngFor="let page of project.partners">
+                                        <span><button [routerLink]="['/projects', page.address]" type="button" class="btn btn-outline-info btn-xs float-right">{{ 'PROJECTS.PROJECT.follow' | translate }}</button></span>
+                                        <div class="icon"><img src="{{page.thumbnail}}" class="rounded-circle float-left" onError="this.onerror=null; this.src='/images/projects/no-image-available.jpg'" /></div>
+                                        <span class="project-name">{{page.name}}</span><br />
+                                        <small class="text-muted">{{page.description}}</small>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal custom-modal" id="editAboutSectionModal">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ 'PROJECTS.PROJECT.editAboutSection' | translate }}</h5>
+                    <button type="button" class="close" (click)="onHideAboutSectionModal()" aria-label="Close">
+                        <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
+                    </button>
+                </div>
+                <form [formGroup]="editAboutForm" (submit)="updateAboutSection()" ngNativeValidate *ngIf="editAboutForm">
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <md-editor formControlName="about" style="width: 100%;" [options]="markdownEditorOptions" required></md-editor>
+                        </div>
+
+                        <h5 class="text-center title">{{ 'PROJECTS.PROJECT.optionalInputs' | translate }}</h5>
+
+                        <div class="input-group mb-3">
+                            <input type="url" class="form-control" placeholder="{{ 'PROJECTS.PROJECT.twitterAccount' | translate }}" formControlName="twitter">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="url" class="form-control" placeholder="{{ 'PROJECTS.PROJECT.facebookPage' | translate }}" formControlName="facebook">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="url" class="form-control" placeholder="{{ 'PROJECTS.PROJECT.youtubeChannel' | translate }}" formControlName="youtube">
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="url" class="form-control" placeholder="{{ 'PROJECTS.PROJECT.githubRepo' | translate }}" formControlName="github">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" (click)="onHideAboutSectionModal()">{{ 'PROJECTS.PROJECT.close' | translate }}</button>
+                        <button type="submit" class="btn btn-info" [disabled]="!editAboutForm.valid">{{ 'PROJECTS.PROJECT.submit' | translate }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal custom-modal" id="addImageModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ 'PROJECTS.PROJECT.media' | translate }} - {{ 'PROJECTS.PROJECT.newImage' | translate }}</h5>
+                    <button type="button" class="close" (click)="onHideAddImageModal()" aria-label="Close">
+                        <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
+                    </button>
+                </div>
+                <form [formGroup]="addImageForm" (submit)="addImageMedia()" ngNativeValidate *ngIf="addImageForm">
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <input type="url" class="form-control" placeholder="{{ 'PROJECTS.PROJECT.imageURL' | translate }}" formControlName="image" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="{{ 'PROJECTS.PROJECT.imageDescription' | translate }}" formControlName="caption">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" (click)="onHideAddImageModal()">{{ 'PROJECTS.PROJECT.close' | translate }}</button>
+                        <button type="submit" class="btn btn-info" [disabled]="!addImageForm.valid">{{ 'PROJECTS.PROJECT.submit' | translate }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal custom-modal" id="addVideoModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ 'PROJECTS.PROJECT.media' | translate }} - {{ 'PROJECTS.PROJECT.newVideo' | translate }}</h5>
+                    <button type="button" class="close" (click)="onHideAddVideoModal()" aria-label="Close">
+                        <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
+                    </button>
+                </div>
+                <form [formGroup]="addVideoForm" (submit)="addVideoMedia()" ngNativeValidate *ngIf="addVideoForm">
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <input type="url" class="form-control" placeholder="{{ 'PROJECTS.PROJECT.youtubeVideo' | translate }}" formControlName="video" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="{{ 'PROJECTS.PROJECT.videoDescription' | translate }}" formControlName="caption">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" (click)="onHideAddVideoModal()">{{ 'PROJECTS.PROJECT.close' | translate }}</button>
+                        <button type="submit" class="btn btn-info">{{ 'PROJECTS.PROJECT.submit' | translate }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal custom-modal" id="addPostImageModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ 'PROJECTS.PROJECT.newPost' | translate }} - {{ 'PROJECTS.PROJECT.addImage' | translate }}</h5>
+                    <button type="button" class="close" (click)="onHideAddPostImageModal()" aria-label="Close">
+                        <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
+                    </button>
+                </div>
+                <form [formGroup]="addPostImageForm" (submit)="addPostImage()" ngNativeValidate *ngIf="addPostImageForm">
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <input type="url" class="form-control" placeholder="{{ 'PROJECTS.PROJECT.imageURL' | translate }}" formControlName="image" required>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" (click)="onHideAddPostImageModal()">{{ 'PROJECTS.PROJECT.close' | translate }}</button>
+                        <button type="submit" class="btn btn-info" [disabled]="!addPostImageForm.valid">{{ 'PROJECTS.PROJECT.add' | translate }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal custom-modal" id="editProjectInfoModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ 'PROJECTS.PROJECT.updateProjectInfo' | translate }}</h5>
+                    <button type="button" class="close" (click)="onHideEditProjectInfoModal()" aria-label="Close">
+                        <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
+                    </button>
+                </div>
+                <form [formGroup]="editProjectInfoForm" (submit)="updateProjectInfo()" ngNativeValidate *ngIf="editProjectInfoForm">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="{{ 'PROJECTS.PROJECT.projectName' | translate }}" formControlName="name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="{{ 'PROJECTS.PROJECT.projectDescription' | translate }}" formControlName="description" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="url" class="form-control" placeholder="{{ 'PROJECTS.PROJECT.projectBannerURL' | translate }}" formControlName="banner">
+                            <small class="text-muted">{{ 'PROJECTS.PROJECT.bannerURLFieldLabel' | translate }}</small>
+                        </div>
+                        <div class="form-group">
+                            <input type="url" class="form-control" placeholder="{{ 'PROJECTS.PROJECT.projectThumbnailURL' | translate }}" formControlName="thumbnail">
+                            <small class="text-muted">{{ 'PROJECTS.PROJECT.thumbnailURLFieldLabel' | translate }}</small>
+                        </div>
+                        <div class="form-group">
+                            <input type="url" class="form-control" placeholder="{{ 'PROJECTS.PROJECT.projectWebsite' | translate }}" formControlName="website">
+                            <small class="text-muted">{{ 'PROJECTS.PROJECT.projectWebsiteFieldLabel' | translate }}</small>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" (click)="onHideEditProjectInfoModal()">{{ 'PROJECTS.PROJECT.close' | translate }}</button>
+                        <button type="submit" class="btn btn-info" [disabled]="!editProjectInfoForm.valid">{{ 'PROJECTS.PROJECT.add' | translate }}</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="modal custom-modal reviews" id="reviewsModal">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ 'PROJECTS.PROJECT.reviews' | translate }}: {{project.name}}</h5>
+                    <button type="button" class="close" (click)="onHideReviewsModal()" aria-label="Close">
+                        <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-secondary" role="alert" *ngIf="project.reviews.length == 0">
+                        <strong>{{ 'PROJECTS.PROJECT.oops' | translate }}</strong> {{ 'PROJECTS.PROJECT.emptySection' | translate }}
+                    </div>
+                    <form [formGroup]="addReviewForm" (submit)="addReview()" ngNativeValidate *ngIf="addReviewForm && isLoggedIn()">
+                        <div class="form-group">
+                            <bar-rating formControlName="rating" required></bar-rating>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" placeholder="{{ 'PROJECTS.PROJECT.writeYourReview' | translate }}" rows="5" formControlName="content" required></textarea>
+                        </div>
+                        <p class="text-right"><button type="submit" class="btn btn-info" [disabled]="!addReviewForm.valid">{{ 'PROJECTS.PROJECT.submit' | translate }}</button></p>
+                    </form>
+                    <div *ngFor="let review of project.reviews; let i = index">
+                        <hr *ngIf="(i > 0) || isAuthor" />
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <div class="d-flex justify-content-center align-content-center">
+                                    <a [routerLink]="['/auth/profile/', review.author.username]" (click)="onHideReviewsModal()"><img src="{{review.author.avatar}}" class="rounded-circle avatar" onError="this.onerror=null;this.src='/images/default-avatar';" style="height: 50px;" /></a>
+                                </div>
+                                <div class="d-flex justify-content-center align-content-center">
+                                    <bar-rating [rate]="review.rating" [max]="5" [readOnly]="true" [theme]="'small'"></bar-rating>
+                                </div>
+                                <div class="d-flex justify-content-center align-content-center">
+                                    <p class="float-left">
+                                        <span class="text-muted" *ngIf="review.likes.length > 0">{{review.likes.length}}</span> &nbsp;<a (click)="onReviewLike(review)"><i class="far fa-thumbs-up"></i></a> &nbsp;
+                                        <a (click)="onRemoveReview(review)" *ngIf="isLoggedIn() && review.author.username == user.username"><i class="far fa-trash-alt"></i></a>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-10">
+                                <p class="float-left"><strong><a [routerLink]="['/auth/profile/', post.author.username]" (click)="onHideReviewsModal()">{{review.author.username}}</a></strong></p>
+                                <p class="float-right text-muted" *ngIf="dateThreshold(review.date) >= 1">{{review.date | amDateFormat:'LL'}}</p>
+                                <p class="float-right text-muted" *ngIf="dateThreshold(review.date) < 1">{{review.date | amTimeAgo}}</p>
+                                <br /><br />
+                                <p class="text-justify" style="white-space: pre-wrap;">{{review.content}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal custom-modal" id="updatePartnerPagesModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ 'PROJECTS.PROJECT.updatePagePartners' | translate }}</h5>
+                    <button type="button" class="close" (click)="onHideUpdatePartnerPagesModal()" aria-label="Close">
+                        <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <form [formGroup]="addPartnerPageForm" (submit)="addPartnerPage()" ngNativeValidate *ngIf="addPartnerPageForm">
+                        <div class="form-row">
+                            <div class="col">
+                                <mat-form-field class="example-full-width">
+                                    <span matPrefix>http://obonob.com/projects/ &nbsp;</span>
+                                    <input matInput placeholder="{{ 'PROJECTS.PROJECT.projectAddress' | translate }}" formControlName="address" required>
+                                </mat-form-field>
+                            </div>
+                            <div class="col">
+                                <button mat-button>{{ 'PROJECTS.PROJECT.submit' | translate }}</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item" *ngFor="let page of project.partners; first as isFirst; last as isLast">
+                        {{page.name}}
+                        <span class="float-right">
+                            <a (click)="onMovePartnerPageUp(page)" *ngIf="!isFirst"><i class="fas fa-arrow-up"></i>&nbsp;</a>
+                            <a (click)="onMovePartnerPageDown(page)" *ngIf="!isLast"><i class="fas fa-arrow-down"></i>&nbsp;</a>
+                            <a (click)="onRemovePartnerPage(page)" class="float-right"><i class="fas fa-trash-alt"></i></a>
+                        </span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal custom-modal" id="listPartnerPagesModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ 'PROJECTS.PROJECT.pagePartners' | translate }}</h5>
+                    <button type="button" class="close" (click)="onHideListPartnerPagesModal()" aria-label="Close">
+                        <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-12" *ngIf="project.partners.length == 0">
+                            <div class="alert alert-secondary" role="alert">
+                                <strong>{{ 'PROJECTS.PROJECT.oops' | translate }}</strong> {{ 'PROJECTS.PROJECT.emptySection' | translate }}
+                            </div>
+                        </div>
+                        <div class="col-sm-2 justify-content-center" *ngFor="let page of project.partners">
+                            <a [routerLink]="['/projects', page.address]"><img src="{{page.thumbnail}}" height="50" width="50" class="rounded-circle avatar" onError="this.onerror=null; this.src='/images/projects/no-image-available.jpg'" /></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="onHideListPartnerPagesModal()">{{ 'PROJECTS.PROJECT.close' | translate }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal custom-modal" id="shareButtonsModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ 'PROJECTS.PROJECT.shareOnSocialMedias' | translate }}</h5>
+                    <button type="button" class="close" (click)="onHideShareButtonsModal()" aria-label="Close">
+                        <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <share-buttons show="13"></share-buttons>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" (click)="onHideShareButtonsModal()">{{ 'PROJECTS.PROJECT.close' | translate }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

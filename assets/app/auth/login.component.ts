@@ -4,6 +4,9 @@ import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {User} from "./user.model";
 import {AuthService} from "./auth.service";
 import {Router} from "@angular/router";
+import {TranslateService} from "@ngx-translate/core";
+import {AppComponent} from "../app.component";
+import {AppService} from "../app.service";
 
 @Component({
     selector: 'app-auth-login',
@@ -13,20 +16,37 @@ import {Router} from "@angular/router";
  * Auth component for the login process
  */
 export class LoginComponent implements OnInit {
+    /**
+     * Form used to login user
+     */
     loginForm: FormGroup;
 
-    constructor(private titleService: Title, private authService: AuthService, private router: Router) {}
-
     /**
-     * Method executed on initialization
+     * Random image picked from public/images/mascot folder
      */
+    pageHeaderImage;
+
+    constructor(
+        private appService: AppService,
+        private titleService: Title,
+        private authService: AuthService,
+        private router: Router,
+        private translateService: TranslateService,
+        private appComponent: AppComponent
+    ) {}
+
     ngOnInit() {
+        //Randomly chosen page image
+        this.pageHeaderImage = this.appComponent.randomPageHeaderImage();
+
+        //Page title
+        this.translateService.get('AUTH.LOGIN').subscribe((res: string) => {
+            this.titleService.setTitle(res.signIn + " - " + this.appComponent.appName);
+        });
+
         //If user is logged in, page can't be accessed
         if(this.authService.isLoggedIn())
             this.router.navigateByUrl('/');
-
-        // Page title
-        this.titleService.setTitle('test');
 
         // Login form
         this.loginForm = new FormGroup({
@@ -45,10 +65,12 @@ export class LoginComponent implements OnInit {
         );
 
         this.authService.login(user).subscribe(
-            //If data is returned
-            data => {
-                localStorage.setItem('token', data.token); //Store generated token locally
-                localStorage.setItem('userId', data.userId); //Store user id locally
+            //Returned user data
+            user => {
+                this.appService.mapUserToSocket().subscribe(); //Map user to socket
+
+                this.appComponent.user = user; //Save user data
+
                 this.router.navigateByUrl('/'); //Redirect user to home page
             }
         );

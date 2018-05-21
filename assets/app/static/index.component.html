@@ -1,4 +1,4 @@
-<div id="home">
+<ng-container *ngIf="projects">
 
     <div class="jumbotron">
         <div class="container">
@@ -14,136 +14,79 @@
             </div>
             <div class="card text-center">
                 <div class="card-block">
-                    <img src="https://cdn1.iconfinder.com/data/icons/animal-face/512/monkey-64.png" />
-                    <h4 class="card-title">Special title treatment</h4>
-                    <p class="card-text text-muted">With supporting text below as a natural lead-in to additional content.</p>
+                    <img src="/images/mascot/monkey-beer.png" />
+                    <h4 class="card-title">{{ 'STATIC.HOME.heyYou' | translate }}</h4>
+                    <p class="card-text text-muted">{{ 'STATIC.HOME.shareYourProject' | translate }}</p>
                 </div>
-                <a href="#" class="card-footer btn btn-success">Start now</a>
+                <a [routerLink]="['/auth/register']" class="card-footer btn btn-success">{{ 'STATIC.HOME.joinUs' | translate }}</a>
             </div>
         </div>
     </div>
 
-    <div class="projects text-center">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h2 class="title">Les projets du moment</h2>
-
-                    <div class="row">
-                        <div class="col-lg-3">
-                            <div class="project">
-                                <div class="description">
-                                    <a href="#">
-                                        <img src="http://trovacamporella.com/img/trovacamporella-fiat500.png" alt="">
-                                        <div class="caption">
-                                            <div class="blur"></div>
-                                            <div class="caption-text">
-                                                <h3>THIS IS H3</h3>
-                                                <p>Loren ipsum dolor si amet ipsum dolor si amet ipsum dolor...</p>
-                                            </div>
-                                        </div>
-                                    </a>
+    <div class="container text-center">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2 class="title">{{ 'STATIC.HOME.latestProjects' | translate }}</h2>
+                <div class="row">
+                    <div class="col-lg-3 project-box" *ngFor="let project of projects">
+                        <div class="description">
+                            <a [routerLink]="['/projects/', project.address]">
+                                <img src="{{project.thumbnail}}" onError="this.onerror=null; this.src='/images/projects/no-image-available.jpg'" />
+                                <div class="caption">
+                                    <div class="blur"></div>
+                                    <div class="caption-text">
+                                        <h3>{{project.name}}</h3>
+                                        <p>{{project.description}}</p>
+                                    </div>
                                 </div>
-                                <div class="footer text-muted">
-                                    <p class="float-left"><i class="fas fa-heart"></i> 1200 abonnés </p>
-                                    <p class="float-right"><i class="fas fa-book"></i> Logiciel</p>
-                                </div>
-                            </div>
+                            </a>
                         </div>
-                        <div class="col-lg-3">
-                            <div class="project">
-                                <div class="description">
-                                    <a href="#">
-                                        <img src="http://trovacamporella.com/img/trovacamporella-fiat500.png" alt="">
-                                        <div class="caption">
-                                            <div class="blur"></div>
-                                            <div class="caption-text">
-                                                <h3>THIS IS H3</h3>
-                                                <p>Loren ipsum dolor si amet ipsum dolor si amet ipsum dolor...</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="footer text-muted">
-                                    <p class="float-left"><i class="fas fa-heart"></i> 1200 abonnés </p>
-                                    <p class="float-right"><i class="fas fa-book"></i> Logiciel</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <div class="project">
-                                <div class="description">
-                                    <a href="#">
-                                        <img src="http://trovacamporella.com/img/trovacamporella-fiat500.png" alt="">
-                                        <div class="caption">
-                                            <div class="blur"></div>
-                                            <div class="caption-text">
-                                                <h3>THIS IS H3</h3>
-                                                <p>Loren ipsum dolor si amet ipsum dolor si amet ipsum dolor...</p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                <div class="footer text-muted">
-                                    <p class="float-left"><i class="fas fa-heart"></i> 1200 abonnés </p>
-                                    <p class="float-right"><i class="fas fa-book"></i> Logiciel</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3">
-                            <img src="http://preview.dotomedia.com/wp-content/uploads/2017/09/200x200-5.gif" class="ads" />
+                        <div class="footer text-muted">
+                            <p class="float-left"><i class="fas fa-heart"></i> {{project.subscribers.length}} {{ 'STATIC.HOME.subscribers' | translate }} </p>
+                            <p class="float-right"><i class="fas fa-book"></i> {{ 'PROJECTS.CATEGORIES.' + project.category | translate }}</p>
                         </div>
                     </div>
-
                 </div>
+
             </div>
         </div>
     </div>
 
-    <div class="presentation">
+    <div id="body-lightgrey">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
-                    <h2 class="title text-center">BeeZer: Comment ça marche ?</h2>
+                    <h2 class="title text-center">oBonoB: {{ 'STATIC.HOME.whatIsIt' | translate }}</h2>
                     <div class="row">
-                        <div class="col-lg-8 text-center">
+                        <div class="col-lg-12 text-center">
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <img src="https://cdn0.iconfinder.com/data/icons/seo-and-marketing-volume-2/256/02-64.png" />
-                                    <h4>INSCRIPTION</h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec elit ante, accumsan faucibus accumsan eget, eleifend eu quam.</p>
+                                    <div class="livicon-evo svg-icon-center" data-options=" name: desktop.svg; size: 64px; colorsOnHover: lighter; eventType: none; autoPlay: true "></div>
+                                    <h4>{{ 'STATIC.HOME.webCreators' | translate }}</h4>
+                                    <p>{{ 'STATIC.HOME.webCreatorsDesc' | translate }}</p>
                                 </div>
                                 <div class="col-sm-4">
-                                    <img src="https://cdn0.iconfinder.com/data/icons/seo-and-marketing-volume-2/256/02-64.png" />
-                                    <h4>INSCRIPTION</h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec elit ante, accumsan faucibus accumsan eget, eleifend eu quam.</p>
+                                    <div class="livicon-evo svg-icon-center" data-options=" name: briefcase.svg; size: 64px; colorsOnHover: lighter; eventType: none; autoPlay: true "></div>
+                                    <h4>{{ 'STATIC.HOME.myProjects' | translate }}</h4>
+                                    <p>{{ 'STATIC.HOME.myProjectsDesc' | translate }}</p>
                                 </div>
                                 <div class="col-sm-4">
-                                    <img src="https://cdn0.iconfinder.com/data/icons/seo-and-marketing-volume-2/256/02-64.png" />
-                                    <h4>INSCRIPTION</h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec elit ante, accumsan faucibus accumsan eget, eleifend eu quam.</p>
+                                    <div class="livicon-evo svg-icon-center" data-options=" name: rocket.svg; size: 64px; colorsOnHover: lighter; eventType: none; autoPlay: true "></div>
+                                    <h4>{{ 'STATIC.HOME.community' | translate }}</h4>
+                                    <p>{{ 'STATIC.HOME.communityDesc' | translate }}</p>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-lg-4">
-                            <h4 class="text-center">Some Statistics</h4>
-                            <ul class="list-group list-group-flush">
-                                <li class="list-group-item">Cras justo odio <span class="badge badge-info float-right">New</span></li>
-                                <li class="list-group-item">Dapibus ac facilisis in <span class="badge badge-info float-right">New</span></li>
-                                <li class="list-group-item">Morbi leo risus <span class="badge badge-info float-right">New</span></li>
-                                <li class="list-group-item">Porta ac consectetur ac <span class="badge badge-info float-right">New</span></li>
-                            </ul>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <div class="animatedsvg seobanner d-none d-sm-block" style="margin-top: -150px;"></div>
     </div>
 
     <div class="d-none d-sm-block">
-        <a class="register d-flex" href="#">
-            <h3 class="justify-content-center align-self-center">Tu as un projet ? Rejoins-nous dès maintenant !</h3>
+        <a class="register-banner d-flex" [routerLink]="['/auth/register']">
+            <h3 class="justify-content-center align-self-center">{{ 'STATIC.HOME.registerToday' | translate }}</h3>
         </a>
     </div>
-
-</div>
+</ng-container>

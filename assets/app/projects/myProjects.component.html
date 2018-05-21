@@ -1,171 +1,182 @@
-<div id="myProjects">
+<ng-container *ngIf="projects && activity && subscriptions">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item active"><a href="#">Profil</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Library</li>
+            <li class="breadcrumb-item"><a [routerLink]="['/']">{{ 'PROJECTS.MYPROJECTS.home' | translate }}</a></li>
+            <li class="breadcrumb-item"><a href="#">{{ 'PROJECTS.MYPROJECTS.projects' | translate }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ 'PROJECTS.MYPROJECTS.myProjects' | translate }}</li>
         </ol>
     </nav>
 
     <div class="page-header">
-        <h1>My projects</h1>
+        <h1><img class="d-none d-sm-inline" src="/images/mascot/{{pageHeaderImage}}" /> {{ 'PROJECTS.MYPROJECTS.myProjects' | translate }}</h1>
     </div>
 
     <div class="container">
         <div class="row">
-            <div class="col-lg-12">
-                <h2 class="title">Mes projets <button (click)="onNewProject()" class="btn btn-info float-right">Nouveau projet</button></h2>
+            <div class="col-lg-12 mb-5">
+                <h3 class="title">
+                    {{ 'PROJECTS.MYPROJECTS.myProjects' | translate }}
+                    <small class="float-right">
+                        <button (click)="onNewProject()" class="btn btn-info btn-sm">{{ 'PROJECTS.MYPROJECTS.newProject' | translate }}</button>
+                    </small>
+                </h3>
 
                 <div class="row">
-                    <div class="col-sm-4" *ngFor="let project of projects">
+                    <div class="col-lg-4 mb-3" *ngFor="let project of projects">
                         <div class="card">
                             <div class="card-body">
                                 <h5 class="card-title">{{project.name}}</h5>
                                 <p class="card-text">{{project.description}}</p>
                             </div>
                             <div class="card-footer">
-                                <button class="btn btn-sm btn-success float-left">Manage</button> &nbsp;
-                                <button class="btn btn-sm btn-danger float-right">Delete</button>
+                                <button [routerLink]="['/projects/' + project.address]" class="btn btn-sm btn-success float-left">{{ 'PROJECTS.MYPROJECTS.manage' | translate }}</button> &nbsp;
+                                <button (click)="onRemoveProject(project)" class="btn btn-sm btn-danger float-right">{{ 'PROJECTS.MYPROJECTS.delete' | translate }}</button>
                             </div>
                         </div>
-                        <br />
                     </div>
-                    <br />
+                    <div class="col-lg-12" *ngIf="projects?.length == 0">
+                        <div class="alert alert-secondary" role="alert">
+                            <strong>{{ 'PROJECTS.MYPROJECTS.oops' | translate }}</strong> {{ 'PROJECTS.MYPROJECTS.noProjects' | translate }}
+                        </div>
+                    </div>
                 </div>
 
             </div>
         </div>
-        <br /><br />
+
         <div class="row">
-            <div class="col-lg-12">
-                <h2 class="title">Mon activité</h2>
+            <div class="col-lg-12 mb-5">
+                <h3 class="title">{{ 'PROJECTS.MYPROJECTS.myActivity' | translate }}</h3>
 
                 <div class="row">
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 mb-3">
                         <div class="card">
-                            <div class="card-header text-center"><i class="far fa-comments"></i> My latest posts</div>
+                            <div class="card-header text-center"><i class="far fa-comments"></i> {{ 'PROJECTS.MYPROJECTS.myLatestPosts' | translate }}</div>
                             <ul class="list-group list-group-flush">
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    Budgey <br />
-                                    <small class="text-muted">2 hours ago</small>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    Budgey <br />
-                                    <small class="text-muted">28 Janvier 2018</small>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action">
-                                    Budgey <br />
-                                    <small class="text-muted">2 hours ago</small>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-light text-center">View all</a>
+                                <ng-container *ngFor="let x of activity; let i = index">
+                                    <a [routerLink]="['/projects/' + x.address]" class="list-group-item list-group-item-action" *ngIf="i < 3">
+                                        {{x.name}} <br />
+                                        <small class="text-muted" *ngIf="dateThreshold(x.date) >= 1">{{x.date | amDateFormat:'LL'}}</small>
+                                        <small class="text-muted" *ngIf="dateThreshold(x.date) < 1">{{x.date | amTimeAgo}}</small>
+                                    </a>
+                                </ng-container>
+                                <li *ngIf="activity.length == 0" class="list-group-item list-group-item-action text-center"><i>{{ 'PROJECTS.MYPROJECTS.noRecentActivity' | translate }}</i></li>
+                                <a [routerLink]="['/projects/users/' + userUsername + '/activity']" class="list-group-item list-group-item-light text-center">{{ 'PROJECTS.MYPROJECTS.viewAll' | translate }}</a>
                             </ul>
                         </div>
                     </div>
 
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 mb-3">
+                        <div class="card">
+                            <div class="card-header text-center"><i class="far fa-bell"></i> {{ 'PROJECTS.MYPROJECTS.projectsFollowed' | translate }}</div>
+                            <ul class="list-group list-group-flush">
+                                <ng-container *ngFor="let project of subscriptions; let i = index">
+                                    <a class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" *ngIf="i < 3">
+                                        <span [routerLink]="['/projects/' + project.address]">
+                                            {{project.name}}<br />
+                                            <small class="text-muted">{{project.subscribers.length}} {{ 'PROJECTS.MYPROJECTS.subscriber' | translate }}<span *ngIf="project.subscribers.length > 1">s</span> </small>
+                                        </span>
+                                        <span><button (click)="onUnsubscribe(project)" class="btn btn-sm btn-danger">{{ 'PROJECTS.MYPROJECTS.unsubscribe' | translate }}</button></span>
+                                    </a>
+                                </ng-container>
+                                <li *ngIf="subscriptions.length == 0" class="list-group-item list-group-item-action text-center"><i>{{ 'PROJECTS.MYPROJECTS.noSubscriptions' | translate }}</i></li>
+
+                                <a [routerLink]="['/projects/users/' + userUsername + '/subscriptions']" class="list-group-item list-group-item-light text-center">{{ 'PROJECTS.MYPROJECTS.viewAll' | translate }}</a>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-4 mb-3">
                         <div class="card contributions">
-                            <div class="card-header text-center"><i class="far fa-money-bill-alt"></i> My latest contributions</div>
-                            <ul class="list-group list-group-flush">
-                                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                            <div class="ribbon"><span>SOON</span></div>
+                            <div class="isBlurred">
+                                <div class="card-header text-center"><i class="far fa-money-bill-alt"></i> {{ 'PROJECTS.MYPROJECTS.myLatestContributions' | translate }}</div>
+                                <ul class="list-group list-group-flush">
+                                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                                     <span>
                                         Cras justo odio<br />
                                         <small class="text-muted">6 Janvier 2018</small>
                                     </span>
-                                    <span class="badge badge-info">2$</span>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                        <span class="badge badge-info badge-lg">2$</span>
+                                    </a>
+                                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                                     <span>
                                         Cras justo odio<br />
                                         <small class="text-muted">6 Janvier 2018</small>
                                     </span>
-                                    <span class="badge badge-info">2$</span>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                        <span class="badge badge-info badge-lg">2$</span>
+                                    </a>
+                                    <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                                     <span>
                                         Cras justo odio<br />
                                         <small class="text-muted">6 Janvier 2018</small>
                                     </span>
-                                    <span class="badge badge-info">2$</span>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-light text-center">View all</a>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="col-lg-4">
-                        <div class="card">
-                            <div class="card-header text-center"><i class="far fa-bell"></i> Projects followed</div>
-                            <ul class="list-group list-group-flush">
-                                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                                    <span>
-                                        Cras justo odio<br />
-                                        <small class="text-muted">98 followers</small>
-                                    </span>
-                                    <span><button class="btn btn-sm btn-danger">Remove</button></span>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                                    <span>
-                                        Cras justo odio<br />
-                                        <small class="text-muted">98 followers</small>
-                                    </span>
-                                    <span><button class="btn btn-sm btn-danger">Remove</button></span>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                                    <span>
-                                        Cras justo odio<br />
-                                        <small class="text-muted">98 followers</small>
-                                    </span>
-                                    <span><button class="btn btn-sm btn-danger">Remove</button></span>
-                                </a>
-                                <a href="#" class="list-group-item list-group-item-light text-center">View all</a>
-                            </ul>
+                                        <span class="badge badge-info badge-lg">2$</span>
+                                    </a>
+                                    <a href="#" class="list-group-item list-group-item-light text-center">{{ 'PROJECTS.MYPROJECTS.viewAll' | translate }}</a>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <br /><br /><br /><br />
-</div>
 
-<div class="backdrop"></div>
-<div class="modal custom-modal" id="newProjectModal">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Nouveau projet</h5>
-                <button type="button" class="close" (click)="hideNewProjectModal()" aria-label="Close">
-                    <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
-                </button>
+    <div class="backdrop"></div>
+    <div class="modal custom-modal" id="newProjectModal">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">{{ 'PROJECTS.MYPROJECTS.newProject' | translate }}</h5>
+                    <button type="button" class="close" (click)="onHideNewProjectModal()" aria-label="Close">
+                        <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
+                    </button>
+                </div>
+                <form [formGroup]="newProjectForm" (ngSubmit)="newProject()" ngNativeValidate>
+                    <div class="modal-body">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" placeholder="{{ 'PROJECTS.MYPROJECTS.projectName' | translate }}" formControlName="name" required>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-append">
+                                <span class="input-group-text" id="basic-addon2">http://obonob.com/projects/</span>
+                            </div>
+                            <input type="text" class="form-control" placeholder="{{ 'PROJECTS.MYPROJECTS.address' | translate }}" formControlName="address" required>
+                        </div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="{{ 'PROJECTS.MYPROJECTS.description' | translate }}" maxlength="30" formControlName="description" required #description>
+                        </div>
+                        <label class="text-muted float-right">{{description.value.length}} {{ 'PROJECTS.MYPROJECTS.character' | translate }}<span *ngIf="description.value.length > 1">s</span> </label>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <label class="input-group-text">{{ 'PROJECTS.MYPROJECTS.category' | translate }}</label>
+                            </div>
+                            <select class="custom-select" formControlName="category" required>
+                                <option value="artCulture">{{ 'PROJECTS.CATEGORIES.artCulture' | translate }}</option>
+                                <option value="bdComics">{{ 'PROJECTS.CATEGORIES.bdComics' | translate }}</option>
+                                <option value="cinema">{{ 'PROJECTS.CATEGORIES.cinema' | translate }}</option>
+                                <option value="finance">{{ 'PROJECTS.CATEGORIES.finance' | translate }}</option>
+                                <option value="food">{{ 'PROJECTS.CATEGORIES.food' | translate }}</option>
+                                <option value="humor">{{ 'PROJECTS.CATEGORIES.humor' | translate }}</option>
+                                <option value="videoGames">{{ 'PROJECTS.CATEGORIES.videoGames' | translate }}</option>
+                                <option value="media">{{ 'PROJECTS.CATEGORIES.media' | translate }}</option>
+                                <option value="music">{{ 'PROJECTS.CATEGORIES.music' | translate }}</option>
+                                <option value="photo">{{ 'PROJECTS.CATEGORIES.photo' | translate }}</option>
+                                <option value="healthWellBeing">{{ 'PROJECTS.CATEGORIES.healthWellBeing' | translate }}</option>
+                                <option value="sciencesTechnologies">{{ 'PROJECTS.CATEGORIES.sciencesTechnologies' | translate }}</option>
+                                <option value="sports">{{ 'PROJECTS.CATEGORIES.sports' | translate }}</option>
+                                <option value="services">{{ 'PROJECTS.CATEGORIES.services' | translate }}</option>
+                                <option value="others">{{ 'PROJECTS.CATEGORIES.others' | translate }}</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" (click)="onHideNewProjectModal()">{{ 'PROJECTS.MYPROJECTS.close' | translate }}</button>
+                        <button type="submit" class="btn btn-info" [disabled]="!newProjectForm.valid">{{ 'PROJECTS.MYPROJECTS.create' | translate }}</button>
+                    </div>
+                </form>
             </div>
-            <form [formGroup]="newProjectForm" (ngSubmit)="createNewProject()" ngNativeValidate>
-                <div class="modal-body">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Project name" formControlName="name" required>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="Address" formControlName="address" required>
-                        <div class="input-group-append">
-                            <span class="input-group-text" id="basic-addon2">.obonob.com</span>
-                        </div>
-                    </div>
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" placeholder="30-characters description" maxlength="30" formControlName="description" required>
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <label class="input-group-text">Category</label>
-                        </div>
-                        <select class="custom-select" formControlName="category" required>
-                            <option *ngFor="let category of categories" value="{{category.name}}">{{category.name}}</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" (click)="hideNewProjectModal()">Close</button>
-                    <button type="submit" class="btn btn-info" [disabled]="!newProjectForm.valid">Submit</button>
-                </div>
-            </form>
         </div>
     </div>
-</div>
+</ng-container>

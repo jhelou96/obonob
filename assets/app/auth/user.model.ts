@@ -3,8 +3,15 @@
  */
 export class User {
     constructor(
-        public username: String,
-        public password: String,
-        public email?: String
+        public username: string,
+        public password: string,
+        public email?: string,
+        public id?: string,
+        public avatar?: string,
+        public level?: number,
+        public biography?: string,
+        public keys?: string[],
+        public registrationDate?: Date,
+        public lastActionDate?: Date
     ) {}
 }

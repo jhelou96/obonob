@@ -1,0 +1,38 @@
+.animatedsvg svg{
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+}
+
+.animatedsvg svg{
+	height:375px;
+	width: 100%;
+}
+
+.seobannersvg .animatedsvg svg #maintitle{
+	font-family: 'Open Sans', sans-serif;
+	fill:#ffffff;
+	font-size: 19px;
+	text-anchor:middle;
+}
+
+.seobannersvg .animatedsvg svg #subtitle{
+	font-family: 'Open Sans', sans-serif;
+	fill:#ffffff;
+	font-size: 10px;
+	text-anchor:middle;
+}
+
+.seobannersvg .animatedsvg svg #subtitle2{
+	font-family: 'Open Sans', sans-serif;
+	fill:#ffffff;
+	font-size: 10px;
+	text-anchor:middle;
+}
+
+.seobannersvg .animatedsvg svg #buttontext{
+	font-family: 'Open Sans', sans-serif;
+	fill:#BCBEC0;
+	font-size: 9px;
+	text-anchor:middle;
+}

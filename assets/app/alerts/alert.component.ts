@@ -3,40 +3,47 @@ import {AlertService} from "./alert.service";
 import {Alert} from "./alert.model";
 import {Observable} from 'rxjs/RX';
 import {Router} from "@angular/router";
-
-declare var jquery:any;
-declare var $ :any;
+import {animate, style, transition, trigger} from "@angular/animations";
 
 @Component({
     selector: 'app-alert',
-    templateUrl: './alert.component.html'
+    templateUrl: './alert.component.html',
+    animations: [
+        trigger('slideInOut', [
+            transition(':enter', [
+                style({transform: 'translateX(100%)'}),
+                animate('200ms ease-in', style({transform: 'translateX(0%)'}))
+            ]),
+            transition(':leave', [
+                animate('200ms ease-in', style({transform: 'translateX(100%)'}))
+            ])
+        ])
+    ]
 })
 /**
- * Alert component for the notifications system
+ * Alert component for the push notifications system
  */
 export class AlertComponent implements OnInit {
     alert: Alert; //Alert object containing the type and message of the alert
+    visible: boolean = false;
 
     constructor(private alertService: AlertService, private router: Router) {
         //Listen for route change and automatically dismiss alert if route changed
         this.router.events.subscribe((event) => {
-            $(".alert-notification").hide();
+            this.dismissAlert();
         });
     }
 
-    /**
-     * Method executed on initialization
-     */
     ngOnInit() {
         //Checks if an alert has been thrown
         this.alertService.alertToggled.subscribe(
             (alert: Alert) => {
                 this.alert = alert;
-                $(".alert-notification").fadeIn();
+                this.visible = true;
 
                 //Auto-dismiss alert after 5 sec
                 var autoDismiss = Observable.interval(5000).subscribe(x => {
-                    $(".alert-notification").fadeOut();
+                    this.visible = false;
                     autoDismiss.unsubscribe();
                 });
             }
@@ -47,8 +54,6 @@ export class AlertComponent implements OnInit {
      * Dismisses alert when the dismiss button is clicked
      */
     dismissAlert() {
-        $(".alert-notification").fadeOut();
+        this.visible = false;
     }
-
-
 }

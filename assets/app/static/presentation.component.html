@@ -1,0 +1,138 @@
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a [routerLink]="['/']">{{ 'STATIC.PRESENTATION.home' | translate }}</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{ 'STATIC.PRESENTATION.presentation' | translate }}</li>
+    </ol>
+</nav>
+
+<div class="page-header">
+    <h1><img class="d-none d-sm-inline" src="/images/mascot/{{pageHeaderImage}}" /> {{ 'STATIC.PRESENTATION.presentation' | translate }}</h1>
+</div>
+
+<div class="container text-center">
+    <div class="row">
+        <div class="col-lg-12">
+            <h3 class="title">{{ 'STATIC.PRESENTATION.howDoesItWork' | translate }}</h3>
+            <div class="row">
+                <div class="col-md-2 offset-md-2 mb-5">
+                    <div class="livicon-evo svg-icon-center" data-options=" name: desktop.svg; size: 200px; eventType: none; autoPlay: true; repeat: loop; colorsOnHover: lighter"></div>
+                </div>
+                <div class="col-md-5 offset-md-1 mb-5 my-auto">
+                    <h4 class="title2">{{ 'STATIC.PRESENTATION.visualAppeal' | translate }}</h4>
+                    <p>{{ 'STATIC.PRESENTATION.visualAppealDesc' | translate }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-5 offset-md-1 mb-5 my-auto">
+                    <h4 class="title2">{{ 'STATIC.PRESENTATION.putPageForward' | translate }}</h4>
+                    <p>{{ 'STATIC.PRESENTATION.putPageForwardDesc' | translate }}</p>
+                </div>
+                <div class="col-md-2 offset-md-1 mb-5 order-first order-lg-last">
+                    <div class="livicon-evo svg-icon-center" data-options=" name: bar-chart.svg; size: 200px; eventType: none; autoPlay: true; repeat: loop; colorsOnHover: lighter"></div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-2 offset-md-2 mb-5">
+                    <div class="livicon-evo svg-icon-center" data-options=" name: piggybank.svg; size: 180px; eventType: none; autoPlay: true; repeat: loop; colorsOnHover: lighter"></div>
+                </div>
+                <div class="col-md-5 offset-md-1 mb-5 my-auto">
+                    <h4 class="title2">{{ 'STATIC.PRESENTATION.waitForResults' | translate }}</h4>
+                    <p>{{ 'STATIC.PRESENTATION.waitForResultsDesc' | translate }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="arrowbar arrow-bottom">
+    <h2><strong>{{ 'STATIC.PRESENTATION.features' | translate }}</strong></h2>
+</div>
+
+<div id="body-lightgrey">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <div class="livicon-evo svg-icon-center" data-options=" name: briefcase.svg; eventType: none; autoPlay: true; colorsOnHover: lighter"></div>
+                <h5 class="title2 text-center text-darkgrey">{{ 'STATIC.PRESENTATION.unlimitedProjects' | translate }}</h5>
+                <p class="text-center">{{ 'STATIC.PRESENTATION.unlimitedProjectsDesc' | translate }}</p>
+            </div>
+            <div class="col-md-3">
+                <div class="livicon-evo svg-icon-center" data-options=" name: brush.svg; eventType: none; autoPlay: true; colorsOnHover: lighter"></div>
+                <h5 class="title2 text-center text-darkgrey">{{ 'STATIC.PRESENTATION.customizablePages' | translate }}</h5>
+                <p class="text-center">{{ 'STATIC.PRESENTATION.customizablePagesDesc' | translate }}</p>
+            </div>
+            <div class="col-md-3">
+                <div class="livicon-evo svg-icon-center" data-options=" name: pen.svg; eventType: none; autoPlay: true; colorsOnHover: lighter"></div>
+                <h5 class="title2 text-center text-darkgrey">{{ 'STATIC.PRESENTATION.news' | translate }}</h5>
+                <p class="text-center">{{ 'STATIC.PRESENTATION.newsDesc' | translate }}</p>
+            </div>
+            <div class="col-md-3">
+                <div class="livicon-evo svg-icon-center" data-options=" name: trophy.svg; eventType: none; autoPlay: true; colorsOnHover: lighter"></div>
+                <h5 class="title2 text-center text-darkgrey">{{ 'STATIC.PRESENTATION.evaluations' | translate }}</h5>
+                <p class="text-center">{{ 'STATIC.PRESENTATION.evaluationsDesc' | translate }}</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="livicon-evo svg-icon-center" data-options=" name: camera.svg; eventType: none; autoPlay: true; colorsOnHover: lighter"></div>
+                <h5 class="title2 text-center text-darkgrey">{{ 'STATIC.PRESENTATION.mediaGallery' | translate }}</h5>
+                <p class="text-center">{{ 'STATIC.PRESENTATION.mediaGalleryDesc' | translate }}</p>
+            </div>
+            <div class="col-md-3">
+                <div class="livicon-evo svg-icon-center" data-options=" name: calendar.svg; eventType: none; autoPlay: true; colorsOnHover: lighter"></div>
+                <h5 class="title2 text-center text-darkgrey">{{ 'STATIC.PRESENTATION.events' | translate }}</h5>
+                <p class="text-center">{{ 'STATIC.PRESENTATION.eventsDesc' | translate }}</p>
+            </div>
+            <div class="col-md-3">
+                <div class="livicon-evo svg-icon-center" data-options=" name: diagram.svg; eventType: none; autoPlay: true; colorsOnHover: lighter"></div>
+                <h5 class="title2 text-center text-darkgrey">{{ 'STATIC.PRESENTATION.partners' | translate }}</h5>
+                <p class="text-center">{{ 'STATIC.PRESENTATION.partnersDesc' | translate }}</p>
+            </div>
+            <div class="col-md-3">
+                <div class="livicon-evo svg-icon-center" data-options=" name: coins.svg; eventType: none; autoPlay: true; colorsOnHover: lighter"></div>
+                <h5 class="title2 text-center text-darkgrey">{{ 'STATIC.PRESENTATION.donations' | translate }}</h5>
+                <p class="text-center">{{ 'STATIC.PRESENTATION.donationsDesc' | translate }}</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                <div class="livicon-evo svg-icon-center" data-options=" name: bell.svg; eventType: none; autoPlay: true; colorsOnHover: lighter"></div>
+                <h5 class="title2 text-center text-darkgrey">{{ 'STATIC.PRESENTATION.notifications' | translate }}</h5>
+                <p class="text-center">{{ 'STATIC.PRESENTATION.notificationsDesc' | translate }}</p>
+            </div>
+            <div class="col-md-3">
+                <div class="livicon-evo svg-icon-center" data-options=" name: bar-chart.svg; eventType: none; autoPlay: true; colorsOnHover: lighter"></div>
+                <h5 class="title2 text-center text-darkgrey">{{ 'STATIC.PRESENTATION.statistics' | translate }}</h5>
+                <p class="text-center">{{ 'STATIC.PRESENTATION.statisticsDesc' | translate }}</p>
+            </div>
+            <div class="col-md-3">
+                <div class="livicon-evo svg-icon-center" data-options=" name: share.svg; eventType: none; autoPlay: true; colorsOnHover: lighter"></div>
+                <h5 class="title2 text-center text-darkgrey">{{ 'STATIC.PRESENTATION.socialMedia' | translate }}</h5>
+                <p class="text-center">{{ 'STATIC.PRESENTATION.socialMediaDesc' | translate }}</p>
+            </div>
+            <div class="col-md-3">
+                <div class="livicon-evo svg-icon-center" data-options=" name: responsive.svg; eventType: none; autoPlay: true; colorsOnHover: lighter"></div>
+                <h5 class="title2 text-center text-darkgrey">{{ 'STATIC.PRESENTATION.API' | translate }}</h5>
+                <p class="text-center">{{ 'STATIC.PRESENTATION.APIDesc' | translate }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-split topbottom30 text-center">
+    <div class="zigzagbg"></div>
+    <div class="left-block">
+        <h3 class="title2 text-center">{{ 'STATIC.PRESENTATION.discoverObonob' | translate }}</h3>
+        <img src="/images/video.jpg" class="img-fluid isDisabled" alt="video" />
+    </div>
+    <div class="right-block">
+        <h3 class="title2">oBonoB: {{ 'STATIC.PRESENTATION.creationsSharingPlatform' | translate }}</h3>
+        <br />
+        <p>{{ 'STATIC.PRESENTATION.creationsSharingPlatformParagraph1' | translate }}</p>
+        <p>{{ 'STATIC.PRESENTATION.creationsSharingPlatformParagraph2' | translate }}</p>
+        <br />
+        <p class="text-center"><button class="btn btn-facebook" [routerLink]="['/auth/register']">{{ 'STATIC.PRESENTATION.signUp' | translate }}</button></p>
+    </div>
+</div>

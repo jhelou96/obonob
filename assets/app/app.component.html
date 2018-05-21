@@ -1,47 +1,94 @@
 <div class="row fixed-top no-gutters custom-navbar">
-    <a href="#" class="navbar-logo col-lg-1" align="center"><img src="https://cdn2.iconfinder.com/data/icons/african-animals/128/monkey-64.png" /></a>
+    <a [routerLink]="['/']" class="navbar-logo col-lg-1" align="center"><img src="/images/logo.png" /></a>
     <div class="col-lg-11">
         <nav class="navbar navbar-expand-md navbar-dark bg-dark">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCustom" aria-controls="navbarCustom" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-                <ul class="navbar-nav mr-auto">
+            <span class="navbar-text" style="height: 50px;">&nbsp;</span>
+
+            <div class="collapse navbar-collapse" id="navbarCustom">
+                <ul class="navbar-nav left-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Projets</a>
+                        <a class="nav-link" (click)="hideNavbar()" [routerLink]="['/projects']" routerLinkActive="active">{{ 'NAVBAR.projects' | translate }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Présentation</a>
+                        <a class="nav-link" (click)="hideNavbar()" [routerLink]="['/presentation']" routerLinkActive="active">{{ 'NAVBAR.presentation' | translate }}</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Blog</a>
+                        <a class="nav-link isDisabled">{{ 'NAVBAR.blog' | translate }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Forums</a>
+                        <a class="nav-link isDisabled">{{ 'NAVBAR.forums' | translate }}</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">A Propos</a>
+                        <a class="nav-link" (click)="hideNavbar()" [routerLink]="['/about']">{{ 'NAVBAR.about' | translate }}</a>
                     </li>
                     <li class="nav-item d-md-none d-lg-none d-xl-none">
-                        <a [routerLink]="['/auth/login']" class="nav-link" *ngIf="!isLoggedIn()">Espace Membre</a>
+                        <a [routerLink]="['/auth/login']" class="nav-link" *ngIf="!isLoggedIn()" (click)="hideNavbar()">{{ 'NAVBAR.memberArea' | translate }}</a>
+                    </li>
+                    <li class="nav-item d-md-none d-lg-none d-xl-none">
+                        <a (click)="[showSidebar(), hideNavbar()]" class="nav-link showSidebar" *ngIf="isLoggedIn()">{{ 'NAVBAR.myAccount' | translate }}</a>
+                    </li>
+                    <li class="nav-item d-md-none d-lg-none d-xl-none">
+                        <a [routerLink]="['/notifications']" class="nav-link" *ngIf="isLoggedIn()" (click)="hideNavbar()">{{ 'NAVBAR.notifications' | translate }} <span class="badge badge-success badge-pill float-right" *ngIf="notifications.length > 0">{{notifications.length}}</span></a>
                     </li>
                 </ul>
             </div>
-            <a href="#" *ngIf="isLoggedIn()"><i class="far fa-bell notifications"></i></a>
-            <a (click)="showSidebar()" *ngIf="isLoggedIn()" id="showSidebar"><img src="https://cdn3.iconfinder.com/data/icons/women-avatars-1/256/5-01-512.png" class="rounded-circle avatar" /></a>
-            <a [routerLink]="['/auth/login']" class="btn btn-info d-none d-md-block" *ngIf="!isLoggedIn()"><span class="fa fa-lock"></span> Espace Membre</a>
+
+            <ul class="navbar-nav right-nav">
+                <li class="nav-item d-none d-md-block">
+                    <a class="nav-link" *ngIf="isLoggedIn()" (click)="onToggleNotifications()" (clickOutside)="hideNotifications()"><div class="notifications-bell"></div></a>
+                </li>
+                <li class="nav-item d-none d-md-block">
+                    <a class="nav-link" (click)="showSidebar()" *ngIf="isLoggedIn()" class="showSidebar"><img src="{{user?.avatar}}" class="rounded-circle avatar" onError="this.onerror=null;this.src='/images/default-avatar.png';" /></a>
+                </li>
+                <li class="nav-item d-none d-md-block">
+                    <a class="nav-link" [routerLink]="['/auth/login']" class="btn btn-info btn-login" *ngIf="!isLoggedIn()"><span class="fa fa-lock"></span> {{ 'NAVBAR.memberArea' | translate }}</a>
+                </li>
+            </ul>
+
+            <div class="notifications-dropdown">
+                <div class="caret"></div>
+                <div class="body">
+                    <div class="row notification" *ngFor="let notification of notifications" [routerLink]="'/messaging/' + notification.data[0]" (click)="onToggleNotifications()">
+                        <div class="col-sm-2">
+                            <img src="{{notification.sender.avatar}}" class="rounded-circle avatar" onError="this.onerror=null;this.src='/images/default-avatar.png';" />
+                        </div>
+                        <div class="col-sm-10">
+                            <span *ngIf="notification.type == 0">{{ 'NOTIFICATIONS.privateMsgFrom' | translate }} <strong>{{notification.sender.username}}</strong></span>
+                            <span *ngIf="notification.type == 1">{{ 'NOTIFICATIONS.newMedia' | translate }} <strong>{{notification.data[1]}}</strong></span>
+                            <span *ngIf="notification.type == 2">{{ 'NOTIFICATIONS.newPost' | translate }} <strong>{{notification.data[1]}}</strong></span>
+                            <span *ngIf="notification.type == 3">{{ 'NOTIFICATIONS.newEvent' | translate }} <strong>{{notification.data[1]}}</strong></span>
+                            <br />
+                            <span>
+                                <small *ngIf="dateThreshold(notification.date) >= 1">{{notification.date | amDateFormat:'LL'}}</small>
+                                <small *ngIf="dateThreshold(notification.date) < 1">{{notification.date | amTimeAgo}}</small>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="row notification" *ngIf="notifications.length == 0">
+                        <div class="col-sm-12 text-center">
+                            <span>{{ 'NOTIFICATIONS.noNotifications' | translate }}</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer text-center" [routerLink]="['/notifications']">
+                    <span>{{ 'NOTIFICATIONS.allNotifications' | translate }}</span>
+                </div>
+            </div>
         </nav>
     </div>
 </div>
 
-<div id="sidebar" *ngIf="isLoggedIn()" (clickOutside)="hideSidebar()" [exclude]="'#showSidebar'">
+<div id="sidebar" *ngIf="isLoggedIn()" (clickOutside)="hideSidebar()" [exclude]="'.showSidebar'">
     <div class="list-group">
-        <p class="text-center avatar"><img src="https://cdn3.iconfinder.com/data/icons/women-avatars-1/256/5-01-512.png" class="rounded-circle" /></p>
-        <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-user" style="float:left; margin-top:2px;"></i> Mon compte</a>
-        <a [routerLink]="['/projects/my-projects']" (click)="hideSidebar()" class="list-group-item list-group-item-action"><i class="fas fa-folder-open" style="float:left; margin-top:2px;"></i> Mes projets</a>
-        <a href="#" class="list-group-item list-group-item-action"><i class="fas fa-envelope" style="float:left; margin-top:2px;"></i> Messagerie</a>
-        <a href="#" (click)="onLogout()" class="list-group-item list-group-item-action logout"><i class="fas fa-sign-out-alt" style="float:left; margin-top:2px;"></i> Déconnexion</a>
+        <p class="text-center avatar"><img src="{{user?.avatar}}" class="rounded-circle avatar-lg" onError="this.onerror=null;this.src='/images/default-avatar.png';" /></p>
+        <a [routerLink]="['/auth/settings']" (click)="hideSidebar()" class="list-group-item list-group-item-action"><i class="fas fa-user icon"></i> {{ 'SIDEBAR.myAccount' | translate }}</a>
+        <a [routerLink]="['/projects/my-projects']" (click)="hideSidebar()" class="list-group-item list-group-item-action"><i class="fas fa-folder-open icon"></i> {{ 'SIDEBAR.myProjects' | translate }}</a>
+        <a [routerLink]="['/messaging']" (click)="hideSidebar()" class="list-group-item list-group-item-action"><i class="fas fa-envelope icon"></i> {{ 'SIDEBAR.inbox' | translate }}</a>
+        <a (click)="onLogout()" class="list-group-item list-group-item-action logout"><i class="fas fa-sign-out-alt icon"></i> {{ 'SIDEBAR.logout' | translate }}</a>
     </div>
 </div>
 
@@ -52,23 +99,23 @@
 
 <footer>
     <div class="container-fluid">
-        <div class="d-none d-sm-block">
+        <div class="d-none d-md-block">
             <div class="row">
                 <div class="col-sm-4">
-                    <p>&copy; BeeZer &bull; Version: <a href="#">0.1.0-Alpha</a></p>
+                    <p>&copy; oBonoB &bull; {{ 'FOOTER.createdWith' | translate }} <span class="livicon-evo svg-icon-inline" style="margin-left: 5px;margin-top: -5px;" data-options="name: heart.svg; size: 20px; colorsOnHover: lighter; eventType: none; autoPlay: true; repeat: loop "></span> &bull; {{ 'FOOTER.version' | translate }}: <a [routerLink]="['/']">0.3.0-Alpha</a></p>
                 </div>
                 <div class="col-sm-4">
                     <p class="text-center social"><a href="#"><i class="fab fa-facebook-f"></i></a> <a href="#"><i class="fab fa-twitter"></i></a> <a href="#"><i class="fab fa-blogger-b"></i></a></p>
                 </div>
                 <div class="col-sm-4">
-                    <p class="text-right"><a href="#">API</a> &bull; <a href="#">CGU</a> &bull; <a href="#">Confidentialité</a>  &bull; <a href="#">Contact</a></p>
+                    <p class="text-right"><a [routerLink]="['/']">{{ 'FOOTER.API' | translate }}</a> &bull; <a [routerLink]="['/']">{{ 'FOOTER.termsOfUse' | translate }}</a> &bull; <a [routerLink]="['/']">{{ 'FOOTER.privacy' | translate }}</a>  &bull; <a href="mailto:obonob.app@gmail.com">{{ 'FOOTER.contact' | translate }}</a></p>
                 </div>
             </div>
         </div>
-        <div class="d-sm-none">
+        <div class="d-md-none">
             <div class="row">
                 <div class="col-sm-12">
-                    <p class="text-center">BeeZer &copy; 2018 &bull; Tous droits réservés</p>
+                    <p class="text-center">oBonoB &copy; 2018 &bull; {{ 'FOOTER.allRightsReserved' | translate }}</p>
                 </div>
             </div>
         </div>

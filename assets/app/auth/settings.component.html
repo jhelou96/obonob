@@ -1,0 +1,65 @@
+<ng-container *ngIf="user">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a [routerLink]="['/']">{{ 'AUTH.SETTINGS.home' | translate }}</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ 'AUTH.SETTINGS.settings' | translate }}</li>
+        </ol>
+    </nav>
+
+    <div class="page-header">
+        <h1><img class="d-none d-sm-inline" src="/images/mascot/{{pageHeaderImage}}" /> {{ 'AUTH.SETTINGS.mySettings' | translate }}</h1>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-8 mb-5">
+                <div class="col-lg-12">
+                    <h3 class="title">{{ 'AUTH.SETTINGS.mySettings' | translate }}</h3>
+                    <div class="alert alert-secondary" role="alert">{{ 'AUTH.SETTINGS.leaveEmptyPassword' | translate }}</div>
+                </div>
+                <form [formGroup]="settingsForm" ngNativeValidate *ngIf="settingsForm" (ngSubmit)="updateSettings()">
+                    <div class="input-group col-lg-12">
+                        <input type="text" class="form-control" formControlName="username" placeholder="{{ 'AUTH.SETTINGS.username' | translate }}" disabled>
+                    </div>
+                    <br />
+                    <div class="input-group col-lg-12">
+                        <input type="text" class="form-control" formControlName="email" placeholder="{{ 'AUTH.SETTINGS.email' | translate }}" required>
+                    </div>
+                    <br />
+                    <div class="input-group">
+                        <div class="col-sm-6 mb-3">
+                            <input type="password" class="form-control" formControlName="password" placeholder="{{ 'AUTH.SETTINGS.password' | translate }}">
+                        </div>
+                        <div class="col-sm-6 mb-3">
+                            <input type="password" class="form-control" formControlName="confirmation" placeholder="{{ 'AUTH.SETTINGS.confirmation' | translate }}">
+                        </div>
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <input type="text" class="form-control" formControlName="avatar" placeholder="Avatar">
+                        <label class="text-muted">{{ 'AUTH.SETTINGS.externalAvatarLink' | translate }}</label>
+                    </div>
+                    <div class="form-group col-lg-12">
+                        <label class="text-muted">{{ 'AUTH.SETTINGS.biography' | translate }}</label>
+                        <md-editor formControlName="biography" style="width: 100%;" [options]="markdownEditorOptions"></md-editor>
+                    </div>
+                    <div class="input-group col-lg-12">
+                        <button type="submit" class="btn btn-info" [disabled]="!settingsForm.valid">{{ 'AUTH.SETTINGS.submit' | translate }}</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-4 mb-5">
+                <div class="col-lg-12 mb-5">
+                    <h3 class="title">{{ 'AUTH.SETTINGS.profile' | translate }}</h3>
+                     <p>{{ 'AUTH.SETTINGS.clickOnProfileButton' | translate }}</p>
+                    <p><button class="btn btn-info" [routerLink]="['/auth/profile/', user.username]"><i class="fas fa-user"></i> {{ 'AUTH.SETTINGS.myProfile' | translate }}</button></p>
+                </div>
+                <br />
+                <div class="col-lg-12 mb-5">
+                    <h3 class="title">{{ 'AUTH.SETTINGS.myAccount' | translate }}</h3>
+                    <p>{{ 'AUTH.SETTINGS.clickOnDeleteAccountButton' | translate }}</p>
+                    <p><button class="btn btn-danger"><i class="fas fa-trash"></i> {{ 'AUTH.SETTINGS.deleteAccount' | translate }}</button></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</ng-container>
