@@ -96,7 +96,7 @@ export class ThreadComponent implements OnInit {
                     this.thread = thread;
 
                     //Page title
-                    this.translateService.get('MESSAGING.THREAD').subscribe((res: string) => {
+                    this.translateService.get('MESSAGING.THREAD').subscribe((res: any) => {
                         this.titleService.setTitle(thread.subject + " - " + res.privateMessaging + " - " + this.appComponent.appName);
                     });
 
@@ -216,7 +216,7 @@ export class ThreadComponent implements OnInit {
      * Allows user to leave the thread
      */
     leaveThread() {
-        this.translateService.get('MESSAGING.ALERT.CONFIRMATION').subscribe((res: string) => {
+        this.translateService.get('MESSAGING.ALERT.CONFIRMATION').subscribe((res: any) => {
             if(confirm(res.leaveThread)) {
                 this.messagingService.removeParticipant(this.thread).subscribe();
             }

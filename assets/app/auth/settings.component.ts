@@ -58,7 +58,7 @@ export class SettingsComponent implements OnInit {
         this.pageHeaderImage = this.appComponent.randomPageHeaderImage();
 
         //Page title
-        this.translateService.get('AUTH').subscribe((res: string) => {
+        this.translateService.get('AUTH').subscribe((res: any) => {
             this.translate = res;
             this.titleService.setTitle(res.SETTINGS.settings + " - " + this.appComponent.appName);
         });

@@ -46,7 +46,7 @@ export class RegistrationComponent implements OnInit {
         this.pageHeaderImage = this.appComponent.randomPageHeaderImage();
 
         //Page title
-        this.translateService.get('AUTH.REGISTRATION').subscribe((res: string) => {
+        this.translateService.get('AUTH.REGISTRATION').subscribe((res: any) => {
             this.titleService.setTitle(res.signUp + " - " +this.appComponent.appName);
         });
 

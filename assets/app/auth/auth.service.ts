@@ -39,8 +39,8 @@ export class AuthService {
     register(user: User) {
         const body = JSON.stringify(user);
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this.httpClient.post(this.appService.appAddress + '/api/auth/register', body, {headers: headers})
-            .map((response: HttpResponse<User>) => {
+        return this.httpClient.post<User>(this.appService.appAddress + '/api/auth/register', body, {headers: headers})
+            .map((response: any) => {
                 //Throw success notification
                 this.alertService.handleAlert("success", this.translate.ALERT.SUCCESS.accountCreated);
 
@@ -58,8 +58,8 @@ export class AuthService {
      * @returns Validated user
      */
     activateUserAccount(key: string) {
-        return this.httpClient.get(this.appService.appAddress + '/api/auth/validation/registration/' + key)
-            .map((response: HttpResponse<Project>) => {
+        return this.httpClient.get<User>(this.appService.appAddress + '/api/auth/validation/registration/' + key)
+            .map((response: any) => {
                 return this.populateUser(response.obj);
             }).catch((error: HttpErrorResponse) => {
                 this.router.navigateByUrl('/');
@@ -75,8 +75,8 @@ export class AuthService {
     resetPasswordRequest(user: string) {
         const body = {user: user};
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this.httpClient.post(this.appService.appAddress + '/api/auth/reset-password', body, {headers: headers})
-            .map((response: HttpResponse<User>) => {
+        return this.httpClient.post<User>(this.appService.appAddress + '/api/auth/reset-password', body, {headers: headers})
+            .map((response: any) => {
                 //Throw success notification
                 this.alertService.handleAlert("success", this.translate.ALERT.SUCCESS.confirmationMailSent + response.obj.email + ".");
 
@@ -112,8 +112,8 @@ export class AuthService {
 
         const body = JSON.stringify(user);
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this.httpClient.post(this.appService.appAddress + '/api/auth/login/' + params, body, {headers: headers})
-            .map((response: HttpResponse<Project>) => {
+        return this.httpClient.post<User>(this.appService.appAddress + '/api/auth/login/' + params, body, {headers: headers})
+            .map((response: any) => {
                 localStorage.setItem('token', response.token); //Store generated token locally
                 localStorage.setItem('userId', response.obj._id); //Store user id locally
                 localStorage.setItem('userUsername', response.obj.username); //Store user username locally
@@ -156,8 +156,8 @@ export class AuthService {
         //Send some params to the server
         const params = '?search=' + search;
 
-        return this.httpClient.get(this.appService.appAddress + '/api/auth/' + user + params)
-            .map((response: HttpResponse<Project>) => {
+        return this.httpClient.get<User>(this.appService.appAddress + '/api/auth/' + user + params)
+            .map((response: any) => {
                 return this.populateUser(response.obj);
             }).catch((error: HttpErrorResponse) => {
                 if(error.status == 404)
@@ -171,8 +171,8 @@ export class AuthService {
      * @returns Users
      */
     getUsers() {
-        return this.httpClient.get(this.appService.appAddress + '/api/auth/')
-            .map((response: HttpResponse<User>) => {
+        return this.httpClient.get<User>(this.appService.appAddress + '/api/auth/')
+            .map((response: any) => {
                 let users: User[] = [];
 
                 for(let user of response.obj)
@@ -196,8 +196,8 @@ export class AuthService {
 
         const body = JSON.stringify(user);
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this.httpClient.patch(this.appService.appAddress + '/api/auth/' + params, body, {headers: headers})
-            .map((response: HttpResponse<Thread>) => {
+        return this.httpClient.patch<User>(this.appService.appAddress + '/api/auth/' + params, body, {headers: headers})
+            .map((response: any) => {
                 this.alertService.handleAlert("success", this.translate.ALERT.SUCCESS.settingsUpdated); //Success message
 
                 return this.populateUser(response.obj);

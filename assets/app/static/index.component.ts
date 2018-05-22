@@ -31,7 +31,7 @@ export class IndexComponent implements AfterViewInit {
     ) {}
 
     ngOnInit() {
-        this.translateService.get('STATIC.HOME').subscribe((res: string) => {
+        this.translateService.get('STATIC.HOME').subscribe((res: any) => {
             this.titleService.setTitle(res.projectSharingPlatform + ' - ' + this.appComponent.appName);
         });
 

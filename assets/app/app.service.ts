@@ -36,8 +36,8 @@ export class AppService {
      * @returns List of projects
      */
     getProjects() {
-        return this.httpClient.get(this.appAddress + '/api/projects')
-            .map((response: HttpResponse<Project>) => {
+        return this.httpClient.get<Project[]>(this.appAddress + '/api/projects')
+            .map((response: any) => {
                 let projects: Project[] = [];
                 for(let project of response.obj) {
                     projects.push(project);

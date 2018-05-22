@@ -74,7 +74,7 @@ export class InboxComponent implements OnInit {
 
     ngOnInit() {
         //Page title
-        this.translateService.get('MESSAGING.INBOX').subscribe((res: string) => {
+        this.translateService.get('MESSAGING.INBOX').subscribe((res: any) => {
             this.titleService.setTitle(res.inbox + " - " + this.appComponent.appName);
         });
 

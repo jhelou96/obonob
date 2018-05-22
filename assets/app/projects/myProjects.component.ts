@@ -63,7 +63,7 @@ export class MyProjectsComponent implements OnInit {
 
     ngOnInit() {
         //Page title
-        this.translateService.get('PROJECTS.MYPROJECTS').subscribe((res: string) => {
+        this.translateService.get('PROJECTS.MYPROJECTS').subscribe((res: any) => {
             this.titleService.setTitle(res.myProjects + " - " + res.projects + " - " + this.appComponent.appName);
         });
 
@@ -151,7 +151,7 @@ export class MyProjectsComponent implements OnInit {
      * @param {Project} project Project to be removed
      */
     onRemoveProject(project: Project) {
-        this.translateService.get('PROJECTS').subscribe((res: string) => {
+        this.translateService.get('PROJECTS').subscribe((res: any) => {
             if(confirm(res.ALERT.CONFIRMATION.removeProject)) {
                 this.projectsService.removeProject(project).subscribe(
                     data => {

@@ -1,7 +1,6 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpResponse, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
+import {HttpClient, HttpErrorResponse, HttpHeaders} from "@angular/common/http";
 import {AlertService} from "../alerts/alert.service";
-import {Category} from "./category.model";
 import {User} from "../auth/user.model";
 import {Observable} from "rxjs/Observable";
 import 'rxjs/add/operator/map';
@@ -41,8 +40,8 @@ export class ProjectsService {
      * @returns List of projects
      */
     getProjects() {
-        return this.httpClient.get(this.appService.appAddress + '/api/projects')
-            .map((response: HttpResponse<Project>) => {
+        return this.httpClient.get<Project[]>(this.appService.appAddress + '/api/projects')
+            .map((response: any) => {
                 let projects: Project[] = [];
                 for(let project of response.obj) {
                     project = this.populateProject(project);
@@ -60,8 +59,8 @@ export class ProjectsService {
      * @returns List of projects
      */
     getUserProjects(userId: string) {
-        return this.httpClient.get(this.appService.appAddress + '/api/projects/users/' + userId)
-            .map((response: HttpResponse<Project>) => {
+        return this.httpClient.get<Project[]>(this.appService.appAddress + '/api/projects/users/' + userId)
+            .map((response: any) => {
                 let projects: Project[] = [];
                 for(let project of response.obj) {
                     project = this.populateProject(project);
@@ -81,7 +80,7 @@ export class ProjectsService {
      */
     getUserActivity(userId: string) {
         return this.httpClient.get(this.appService.appAddress + '/api/projects/users/' + userId + '/activity/')
-            .map((response: HttpResponse<Category>) => {
+            .map((response: any) => {
                 const activity = response.obj;
 
                 return activity;
@@ -102,8 +101,8 @@ export class ProjectsService {
         const body = JSON.stringify(project);
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
 
-        return this.httpClient.post(this.appService.appAddress + '/api/projects' + params, body, {headers: headers})
-            .map(data => {
+        return this.httpClient.post<Project>(this.appService.appAddress + '/api/projects' + params, body, {headers: headers})
+            .map((data: any) => {
                 this.alertService.handleAlert("success", this.translate.ALERT.SUCCESS.projectCreated); //Throw success notification
 
                 //Return created project
@@ -122,8 +121,8 @@ export class ProjectsService {
      * @returns Project retrieved
      */
     getProject(address: string) {
-        return this.httpClient.get(this.appService.appAddress + '/api/projects/' + address)
-            .map((response: HttpResponse<Project>) => {
+        return this.httpClient.get<Project>(this.appService.appAddress + '/api/projects/' + address)
+            .map((response: any) => {
                 return this.populateProject(response.obj);
             }).catch((error: HttpErrorResponse) => {
                 if(error.status == 404)
@@ -135,14 +134,13 @@ export class ProjectsService {
     /**
      * Sends request to backend server to remove a specific project
      * @param {Project} project Project to be removed
-     * @returns Success message if project removed
      */
     removeProject(project: Project) {
         //Send some params to the server
         const params = (localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '');
 
         return this.httpClient.delete(this.appService.appAddress + '/api/projects/' + project.address + params)
-            .map((response: HttpResponse<any>) => {
+            .map((response: any) => {
                 this.alertService.handleAlert("success", this.translate.ALERT.SUCCESS.projectRemoved); //Throw success notification
             })
             .catch((error: HttpErrorResponse) => {
@@ -154,7 +152,7 @@ export class ProjectsService {
     /**
      * Sends a request to the backend to update the project
      * @param project Project to be updated
-     * @returns {Observable<any>}
+     * @returns Updated project
      */
     updateProject(project) {
         //Send some params to the server
@@ -162,8 +160,8 @@ export class ProjectsService {
 
         const body = JSON.stringify(project);
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this.httpClient.patch(this.appService.appAddress + '/api/projects/' + project.address + params, body, {headers: headers})
-            .map((response: HttpResponse<Project>) => {
+        return this.httpClient.patch<Project>(this.appService.appAddress + '/api/projects/' + project.address + params, body, {headers: headers})
+            .map((response: any) => {
                 this.alertService.handleAlert("success", this.translate.ALERT.SUCCESS.projectUpdated); //Throw success notification
 
                 return this.populateProject(response.obj);
@@ -186,8 +184,8 @@ export class ProjectsService {
 
         const body = JSON.stringify(post);
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this.httpClient.post(this.appService.appAddress + '/api/projects/' + project.address + '/posts' + params, body, {headers: headers})
-            .map((response: HttpResponse<Project>) => {
+        return this.httpClient.post<Project>(this.appService.appAddress + '/api/projects/' + project.address + '/posts' + params, body, {headers: headers})
+            .map((response: any) => {
                 this.alertService.handleAlert("success", this.translate.ALERT.SUCCESS.postAdded); //Throw success notification
 
                 return this.populateProject(response.obj);
@@ -208,8 +206,8 @@ export class ProjectsService {
         //Send some params to the server
         const params = (localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '');
 
-        return this.httpClient.delete(this.appService.appAddress + '/api/projects/' + project.address + '/posts/' + post.id + params)
-            .map((response: HttpResponse<Project>) => {
+        return this.httpClient.delete<Project>(this.appService.appAddress + '/api/projects/' + project.address + '/posts/' + post.id + params)
+            .map((response: any) => {
                 this.alertService.handleAlert("success", this.translate.ALERT.SUCCESS.postRemoved); //Throw success notification
 
                 return this.populateProject(response.obj);
@@ -233,8 +231,8 @@ export class ProjectsService {
 
         const body = JSON.stringify(reply);
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this.httpClient.post(this.appService.appAddress + '/api/projects/' + project.address + '/posts/' + post.id + params, body, {headers: headers})
-            .map((response: HttpResponse<Project>) => {
+        return this.httpClient.post<Project>(this.appService.appAddress + '/api/projects/' + project.address + '/posts/' + post.id + params, body, {headers: headers})
+            .map((response: any) => {
                 this.alertService.handleAlert("success", this.translate.ALERT.SUCCESS.postReplyAdded); //Throw success notification
 
                 return this.populateProject(response.obj);
@@ -256,8 +254,8 @@ export class ProjectsService {
         //Send some params to the server
         const params = (localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '');
 
-        return this.httpClient.delete(this.appService.appAddress + '/api/projects/' + project.address + '/posts/' + post.id  + "/replies/" + reply.id + params)
-            .map((response: HttpResponse<Project>) => {
+        return this.httpClient.delete<Project>(this.appService.appAddress + '/api/projects/' + project.address + '/posts/' + post.id  + "/replies/" + reply.id + params)
+            .map((response: any) => {
                 this.alertService.handleAlert("success", this.translate.ALERT.SUCCESS.postReplyRemoved); //Throw success notification
 
                 return this.populateProject(response.obj);
@@ -279,8 +277,8 @@ export class ProjectsService {
         const params = (localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '');
 
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this.httpClient.patch(this.appService.appAddress + '/api/projects/' + project.address + '/posts/' + post.id + '/likes' + params, null, {headers: headers})
-            .map((response: HttpResponse<Project>) => {
+        return this.httpClient.patch<Project>(this.appService.appAddress + '/api/projects/' + project.address + '/posts/' + post.id + '/likes' + params, null, {headers: headers})
+            .map((response: any) => {
                 return this.populateProject(response.obj);
             })
             .catch((error: HttpErrorResponse) => {
@@ -301,8 +299,8 @@ export class ProjectsService {
 
         const body = JSON.stringify(media);
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this.httpClient.post(this.appService.appAddress + '/api/projects/' + project.address + '/media' + params, body, {headers: headers})
-            .map((response: HttpResponse<Project>) => {
+        return this.httpClient.post<Project>(this.appService.appAddress + '/api/projects/' + project.address + '/media' + params, body, {headers: headers})
+            .map((response: any) => {
                 this.alertService.handleAlert("success", this.translate.ALERT.SUCCESS.mediaUploaded); //Throw success notification
 
                 return this.populateProject(response.obj);
@@ -323,8 +321,8 @@ export class ProjectsService {
         //Send some params to the server
         const params = (localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '');
 
-        return this.httpClient.delete(this.appService.appAddress + '/api/projects/' + project.address + '/media/' + media.id + params)
-            .map((response: HttpResponse<Project>) => {
+        return this.httpClient.delete<Project>(this.appService.appAddress + '/api/projects/' + project.address + '/media/' + media.id + params)
+            .map((response: any) => {
                 this.alertService.handleAlert("success", this.translate.ALERT.SUCCESS.mediaRemoved); //Throw success notification
 
                 return this.populateProject(response.obj);
@@ -347,8 +345,8 @@ export class ProjectsService {
 
         const body = JSON.stringify(event);
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this.httpClient.post(this.appService.appAddress + '/api/projects/' + project.address + '/events' + params, body, {headers: headers})
-            .map((response: HttpResponse<Project>) => {
+        return this.httpClient.post<Project>(this.appService.appAddress + '/api/projects/' + project.address + '/events' + params, body, {headers: headers})
+            .map((response: any) => {
                 this.alertService.handleAlert("success", this.translate.ALERT.SUCCESS.eventAdded); //Throw success notification
 
                 return this.populateProject(response.obj);
@@ -369,8 +367,8 @@ export class ProjectsService {
         //Send some params to the server
         const params = (localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '');
 
-        return this.httpClient.delete(this.appService.appAddress + '/api/projects/' + project.address + '/events/' + event.id + params)
-            .map((response: HttpResponse<Project>) => {
+        return this.httpClient.delete<Project>(this.appService.appAddress + '/api/projects/' + project.address + '/events/' + event.id + params)
+            .map((response: any) => {
                 this.alertService.handleAlert("success", this.translate.ALERT.SUCCESS.eventRemoved); //Throw success notification
 
                 return this.populateProject(response.obj);
@@ -393,8 +391,8 @@ export class ProjectsService {
 
         const body = JSON.stringify(review);
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this.httpClient.post(this.appService.appAddress + '/api/projects/' + project.address + '/reviews' + params, body, {headers: headers})
-            .map((response: HttpResponse<Project>) => {
+        return this.httpClient.post<Project>(this.appService.appAddress + '/api/projects/' + project.address + '/reviews' + params, body, {headers: headers})
+            .map((response: any) => {
                 this.alertService.handleAlert("success", this.translate.ALERT.SUCCESS.reviewAdded); //Throw success notification
 
                 return this.populateProject(response.obj);
@@ -416,8 +414,8 @@ export class ProjectsService {
         const params = (localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '');
 
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this.httpClient.patch(this.appService.appAddress + '/api/projects/' + project.address + '/reviews/' + review.id + '/likes' + params, null, {headers: headers})
-            .map((response: HttpResponse<Project>) => {
+        return this.httpClient.patch<Project>(this.appService.appAddress + '/api/projects/' + project.address + '/reviews/' + review.id + '/likes' + params, null, {headers: headers})
+            .map((response: any) => {
                 return this.populateProject(response.obj);
             })
             .catch((error: HttpErrorResponse) => {
@@ -436,8 +434,8 @@ export class ProjectsService {
         //Send some params to the server
         const params = (localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '');
 
-        return this.httpClient.delete(this.appService.appAddress + '/api/projects/' + project.address + '/reviews/' + review.id + params)
-            .map((response: HttpResponse<Project>) => {
+        return this.httpClient.delete<Project>(this.appService.appAddress + '/api/projects/' + project.address + '/reviews/' + review.id + params)
+            .map((response: any) => {
                 this.alertService.handleAlert("success", this.translate.ALERT.SUCCESS.reviewRemoved); //Throw success notification
 
                 return this.populateProject(response.obj);
@@ -460,8 +458,8 @@ export class ProjectsService {
 
         const body = JSON.stringify(page);
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this.httpClient.post(this.appService.appAddress + '/api/projects/' + project.address + '/partners' + params, body, {headers: headers})
-            .map((response: HttpResponse<Project>) => {
+        return this.httpClient.post<Project>(this.appService.appAddress + '/api/projects/' + project.address + '/partners' + params, body, {headers: headers})
+            .map((response: any) => {
                 this.alertService.handleAlert("success", this.translate.ALERT.SUCCESS.partnerPageAdded); //Throw success notification
 
                 return this.populateProject(response.obj);
@@ -482,8 +480,8 @@ export class ProjectsService {
         //Send some params to the server
         const params = (localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '');
 
-        return this.httpClient.delete(this.appService.appAddress + '/api/projects/' + project.address + '/partners/' + page.id + params)
-            .map((response: HttpResponse<Project>) => {
+        return this.httpClient.delete<Project>(this.appService.appAddress + '/api/projects/' + project.address + '/partners/' + page.id + params)
+            .map((response: any) => {
                 this.alertService.handleAlert("success", this.translate.ALERT.SUCCESS.partnerPageRemoved); //Throw success notification
 
                 return this.populateProject(response.obj);
@@ -508,8 +506,8 @@ export class ProjectsService {
 
         const body = JSON.stringify(page);
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this.httpClient.patch(this.appService.appAddress + '/api/projects/' + project.address + '/partners/' + page.id + '/' + move + params, body, {headers: headers})
-            .map((response: HttpResponse<Project>) => {
+        return this.httpClient.patch<Project>(this.appService.appAddress + '/api/projects/' + project.address + '/partners/' + page.id + '/' + move + params, body, {headers: headers})
+            .map((response: any) => {
                 this.alertService.handleAlert("error", this.translate.ALERT.SUCCESS.partnerPageMoved);
 
                 return this.populateProject(response.obj);
@@ -530,8 +528,8 @@ export class ProjectsService {
         const params = (localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '');
 
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this.httpClient.post(this.appService.appAddress + '/api/projects/' + project.address + '/subscribers' + params, null, {headers: headers})
-            .map((response: HttpResponse<Project>) => {
+        return this.httpClient.post<Project>(this.appService.appAddress + '/api/projects/' + project.address + '/subscribers' + params, null, {headers: headers})
+            .map((response: any) => {
                 this.alertService.handleAlert("success", this.translate.ALERT.SUCCESS.subscribed); //Throw success notification
 
                 return this.populateProject(response.obj);
@@ -551,8 +549,8 @@ export class ProjectsService {
         //Send some params to the server
         const params = (localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '');
 
-        return this.httpClient.delete(this.appService.appAddress + '/api/projects/' + project.address + '/subscribers' + params)
-            .map((response: HttpResponse<Project>) => {
+        return this.httpClient.delete<Project>(this.appService.appAddress + '/api/projects/' + project.address + '/subscribers' + params)
+            .map((response: any) => {
                 this.alertService.handleAlert("success", this.translate.ALERT.SUCCESS.unsubscribed); //Throw success notification
 
                 return this.populateProject(response.obj);
@@ -569,8 +567,8 @@ export class ProjectsService {
      * @returns Projects to which the user subscribed
      */
     getUserSubscriptions(user: string) {
-        return this.httpClient.get(this.appService.appAddress + '/api/projects/users/' + user + '/subscriptions/')
-            .map((response: HttpResponse<Category>) => {
+        return this.httpClient.get<Project>(this.appService.appAddress + '/api/projects/users/' + user + '/subscriptions/')
+            .map((response: any) => {
                 const project = response.obj;
 
                 return project;

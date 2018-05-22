@@ -61,7 +61,7 @@ export class SubscriptionsComponent {
         this.route.params.subscribe(
             params => {
                 //Page title
-                this.translateService.get('PROJECTS.SUBSCRIPTIONS').subscribe((res: string) => {
+                this.translateService.get('PROJECTS.SUBSCRIPTIONS').subscribe((res: any) => {
                     this.titleService.setTitle(params['user'] + " - " + res.subscriptions + " - " + res.projects + " - " + this.appComponent.appName);
                 });
 

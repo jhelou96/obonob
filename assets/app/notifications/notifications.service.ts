@@ -26,8 +26,8 @@ export class NotificationsService {
         //Send some params to the server
         const params = (localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '');
 
-        return this.httpClient.get(this.appService.appAddress + '/api/notifications/' + status + params)
-            .map((response: HttpResponse<Notification>) => {
+        return this.httpClient.get<Notification>(this.appService.appAddress + '/api/notifications/' + status + params)
+            .map((response: any) => {
                 const notifications = response.obj;
                 let formattedNotifications: Notification[] = [];
 

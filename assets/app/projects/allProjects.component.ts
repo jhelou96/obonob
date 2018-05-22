@@ -52,7 +52,7 @@ export class AllProjectsComponent {
 
     ngOnInit() {
         //Page title
-        this.translateService.get('PROJECTS.ALLPROJECTS').subscribe((res: string) => {
+        this.translateService.get('PROJECTS.ALLPROJECTS').subscribe((res: any) => {
             this.titleService.setTitle(res.projects + " - " + this.appComponent.appName);
         });
 

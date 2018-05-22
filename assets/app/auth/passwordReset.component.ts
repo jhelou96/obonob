@@ -35,7 +35,7 @@ export class PasswordResetComponent implements OnInit {
             this.router.navigateByUrl('/');
 
         //Page title
-        this.translateService.get('AUTH').subscribe((res: string) => {
+        this.translateService.get('AUTH').subscribe((res: any) => {
             this.titleService.setTitle(res.PASSWORDRESET.passwordReset + " - " + this.appComponent.appName);
         });
 

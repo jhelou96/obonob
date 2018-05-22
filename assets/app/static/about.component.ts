@@ -23,7 +23,7 @@ export class AboutComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.translateService.get('STATIC.ABOUT').subscribe((res: string) => {
+        this.translateService.get('STATIC.ABOUT').subscribe((res: any) => {
             this.titleService.setTitle(res.about + ' - ' + this.appComponent.appName);
         });
 

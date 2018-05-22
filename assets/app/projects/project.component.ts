@@ -185,7 +185,7 @@ export class ProjectComponent implements OnInit {
                     this.project = project;
 
                     //Page title
-                    this.translateService.get('PROJECTS.PROJECT').subscribe((res: string) => {
+                    this.translateService.get('PROJECTS.PROJECT').subscribe((res: any) => {
                         this.titleService.setTitle(this.project.name + " - " + res.projects + " - " + this.appComponent.appName);
                     });
 
@@ -505,7 +505,7 @@ export class ProjectComponent implements OnInit {
 
                 //Update statically array until next refresh to prevent glitch with modal
                 const postIndex = this.project.posts.indexOf(post);
-                reply.author = {'username': this.user.username, 'avatar': this.user.avatar};
+                reply.author = this.user;
                 reply.date = new Date();
                 reply.id = project.posts[postIndex].replies[0].id; //Set reply ID = ID of last added reply
                 this.project.posts[postIndex].replies.splice(0, 0, reply);
@@ -684,7 +684,6 @@ export class ProjectComponent implements OnInit {
         }
 
         this.calendarDays.push(week);
-        console.log(this.calendarDays);
     }
 
     /**

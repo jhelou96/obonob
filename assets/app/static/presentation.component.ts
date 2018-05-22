@@ -26,7 +26,7 @@ export class PresentationComponent implements OnInit {
     ) {}
 
     ngOnInit() {
-        this.translateService.get('STATIC.PRESENTATION').subscribe((res: string) => {
+        this.translateService.get('STATIC.PRESENTATION').subscribe((res: any) => {
             this.titleService.setTitle(res.presentation + ' - ' + this.appComponent.appName);
         });
 

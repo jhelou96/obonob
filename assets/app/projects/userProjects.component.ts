@@ -55,8 +55,8 @@ export class UserProjectsComponent {
         this.route.params.subscribe(
             params => {
                 //Page title
-                this.translateService.get('PROJECTS.USERPROJECTS').subscribe((res: string) => {
-                    this.titleService.setTitle(params['user'] + " - Projects - " + this.appComponent.appName);
+                this.translateService.get('PROJECTS.USERPROJECTS').subscribe((res: any) => {
+                    this.titleService.setTitle(params['user'] + " - " + res.projects + " - " + this.appComponent.appName);
                 });
 
                 //Retrieve user data from his username

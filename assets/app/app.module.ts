@@ -29,7 +29,7 @@ export function markedOptionsFactory(): MarkedOptions {
 
     //Style for the code markdown
     renderer.code = (code: string, language: string) => {
-        return '<pre class="line-numbers"><code class="language-' + language + '">' + code + '</code></pre>' ;
+        return '<pre class="line-numbers"><code class="language-' + language + '"><xmp>' + code + '</xmp></code></pre>' ;
     };
 
     //Style for the heading markdown

@@ -44,7 +44,7 @@ export class NotificationsComponent implements OnInit {
 
     ngOnInit() {
         //Page title
-        this.translateService.get('NOTIFICATIONS').subscribe((res: string) => {
+        this.translateService.get('NOTIFICATIONS').subscribe((res: any) => {
             this.titleService.setTitle(res.myNotifications + " - " + this.appComponent.appName);
         });
 

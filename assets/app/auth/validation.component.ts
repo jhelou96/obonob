@@ -55,7 +55,7 @@ export class ValidationComponent implements OnInit {
         this.pageHeaderImage = this.appComponent.randomPageHeaderImage();
 
         //Page title
-        this.translateService.get('AUTH.VALIDATION').subscribe((res: string) => {
+        this.translateService.get('AUTH.VALIDATION').subscribe((res: any) => {
             this.titleService.setTitle(res.accountValidation + " - " + this.appComponent.appName);
         });
 

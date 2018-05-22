@@ -102,7 +102,8 @@ export class ProjectEvent {
     constructor(
         public description: string,
         public date: Date,
-        public id?: string
+        public id?: string,
+        public isExpired?: boolean
     ) {}
 }
 

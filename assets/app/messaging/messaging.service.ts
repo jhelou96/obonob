@@ -41,8 +41,8 @@ export class MessagingService {
 
         const body = JSON.stringify(thread);
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this.httpClient.post(this.appService.appAddress + '/api/messaging/' + params, body, {headers: headers})
-            .map((response: HttpResponse<Thread>) => {
+        return this.httpClient.post<Thread>(this.appService.appAddress + '/api/messaging/' + params, body, {headers: headers})
+            .map((response: any) => {
                 this.router.navigateByUrl('/messaging/' + response.obj._id); //Redirect user to thread
             }).catch((error: HttpErrorResponse) => {
                 this.alertService.handleAlert("error", this.translate.ALERT.ERROR[error.error.key]);
@@ -62,8 +62,8 @@ export class MessagingService {
 
         const body = JSON.stringify(message);
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this.httpClient.post(this.appService.appAddress + '/api/messaging/' + thread.id + params, body, {headers: headers})
-            .map((response: HttpResponse<Thread>) => {
+        return this.httpClient.post<Thread>(this.appService.appAddress + '/api/messaging/' + thread.id + params, body, {headers: headers})
+            .map((response: any) => {
                 this.alertService.handleAlert("success", this.translate.ALERT.SUCCESS.newMessagePosted); //Throw success notification
 
                 thread = this.populateThread(response.obj);
@@ -86,8 +86,8 @@ export class MessagingService {
 
         const body = '{"participant": "' + participant + '"}';
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this.httpClient.post(this.appService.appAddress + '/api/messaging/' + thread.id + '/participants/' + params, body, {headers: headers})
-            .map((response: HttpResponse<Thread>) => {
+        return this.httpClient.post<Thread>(this.appService.appAddress + '/api/messaging/' + thread.id + '/participants/' + params, body, {headers: headers})
+            .map((response: any) => {
                 this.alertService.handleAlert("success", this.translate.ALERT.SUCCESS.newParticipantAdded); //Throw success notification
 
                 thread = this.populateThread(response.obj);
@@ -107,8 +107,8 @@ export class MessagingService {
         //Send some params to the server
         const params = (localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '');
 
-        return this.httpClient.delete(this.appService.appAddress + '/api/messaging/' + thread.id + '/participants/' + params)
-            .map((response: HttpResponse<Thread>) => {
+        return this.httpClient.delete<Thread>(this.appService.appAddress + '/api/messaging/' + thread.id + '/participants/' + params)
+            .map((response: any) => {
                 this.router.navigateByUrl('/messaging');
             })
             .catch((error: HttpErrorResponse) => {
@@ -125,8 +125,8 @@ export class MessagingService {
         //Send to server the socket ID and the user token so it can map the socket to the user
         const params = '?socketId=' + this.appService.socketId + (localStorage.getItem('token') ? '&token=' + localStorage.getItem('token') : '');
 
-        return this.httpClient.get(this.appService.appAddress + '/api/messaging/' + params)
-            .map((response: HttpResponse<Thread>) => {
+        return this.httpClient.get<Thread[]>(this.appService.appAddress + '/api/messaging/' + params)
+            .map((response: any) => {
                 let threads : Thread[] = [];
                 for(let thread of response.obj) {
                     thread = this.populateThread(thread);
@@ -149,8 +149,8 @@ export class MessagingService {
         //Send some params to the server
         const params = (localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '');
 
-        return this.httpClient.get(this.appService.appAddress + '/api/messaging/' + id + params)
-            .map((response: HttpResponse<Thread>) => {
+        return this.httpClient.get<Thread>(this.appService.appAddress + '/api/messaging/' + id + params)
+            .map((response: any) => {
                 return this.populateThread(response.obj);
             }).catch((error: HttpErrorResponse) => {
                 this.router.navigateByUrl('/messaging');
@@ -168,8 +168,8 @@ export class MessagingService {
         const params = (localStorage.getItem('token') ? '?token=' + localStorage.getItem('token') : '');
 
         const headers = new HttpHeaders({'Content-Type': 'application/json'});
-        return this.httpClient.patch(this.appService.appAddress + '/api/messaging/' + thread.id + '/lastseen/' + params, null, {headers: headers})
-            .map((response: HttpResponse<Thread>) => {
+        return this.httpClient.patch<Thread>(this.appService.appAddress + '/api/messaging/' + thread.id + '/lastseen/' + params, null, {headers: headers})
+            .map((response: any) => {
                 return this.populateThread(response.obj);
             })
             .catch((error: HttpErrorResponse) => {
@@ -187,7 +187,7 @@ export class MessagingService {
         var participants = []; //List of participants
         var isRead = true; //If user has seen the thread since the last update
         for(let participant of response.participants) {
-            participants.push(new User(participant.user.username, participant.user.password, participant.user.email, participant.user._id, participant.user.avatar);
+            participants.push(new User(participant.user.username, participant.user.password, participant.user.email, participant.user._id, participant.user.avatar));
 
             //Check if user has seen the message since the last message was posted
             if(participant.user._id == localStorage.getItem('userId')) {

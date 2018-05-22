@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit {
         this.pageHeaderImage = this.appComponent.randomPageHeaderImage();
 
         //Page title
-        this.translateService.get('AUTH.LOGIN').subscribe((res: string) => {
+        this.translateService.get('AUTH.LOGIN').subscribe((res: any) => {
             this.titleService.setTitle(res.signIn + " - " + this.appComponent.appName);
         });
 

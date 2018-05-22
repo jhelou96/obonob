@@ -44,7 +44,7 @@ export class ProfileComponent implements OnInit {
         //Retrieve user username from URL
         this.route.params.subscribe(params => {
             //Page title
-            this.translateService.get('AUTH.PROFILE').subscribe((res: string) => {
+            this.translateService.get('AUTH.PROFILE').subscribe((res: any) => {
                 this.titleService.setTitle(params['username'] + " - " + res.members + " - " + this.appComponent.appName);
             });
 
