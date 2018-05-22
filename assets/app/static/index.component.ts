@@ -44,9 +44,8 @@ export class IndexComponent implements AfterViewInit {
 
     ngAfterViewInit() {
         //Import SEO SVG animation scripts
-        $.getScript( "/js/noframework.waypoints.min.js" );
-        $.getScript( "/js/banner.js" );
-        $.getScript( "/js/seobanner.js" );
+        $.getScript( "/js/prod/noframework.waypoints.min.js" );
+        $.getScript( "/js/prod/seo-banner.js" );
 
         //Import SVG animated icons scripts
         $.getScript( "/LivIconsEvo/js/tools/DrawSVGPlugin.min.js" );
