@@ -16,7 +16,7 @@ var notificationsRoutes = require('./routes/notifications');
 var app = express();
 
 //Database connection
-mongoose.connect('mongodb://localhost:27017/obonob');
+mongoose.connect('mongodb://holow:sniperest@ds231460.mlab.com:31460/obonob');
 
 //Email setup
 var transporter = nodemailer.createTransport({

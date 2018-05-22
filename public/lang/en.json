@@ -14,7 +14,9 @@
             "myProjectsDesc": "Crées une page pour chacun de tes projets afin de commencer à bâtir une communauté autour de tes applications !",
             "community": "Community",
             "communityDesc": "Une fois ta page établie, elle est mise en avant sur la plateforme. La communauté peut alors suivre l'évolution du projet et faire des dons !",
-            "registerToday": "Tu as un projet ? Rejoins-nous dès maintenant !"
+            "registerToday": "Tu as un projet ? Rejoins-nous dès maintenant !",
+            "oops": "Oops!",
+            "noProjectsFound": "Il n'y a aucun projet disponible pour le moment :("
         },
         "PRESENTATION": {
             "presentation": "Presentation",
