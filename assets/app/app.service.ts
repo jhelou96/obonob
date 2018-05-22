@@ -14,7 +14,7 @@ export class AppService {
     /**
      * App address used for the API calls
      */
-    appAddress = "http://localhost:3000";
+    appAddress = "https://obonob.herokuapp.com";
 
     /**
      * Server socket ID used to map a user to a server socket

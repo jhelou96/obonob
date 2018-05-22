@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
     /**
      * App name for child components
      */
-    appName = "ObonoB";
+    appName = "oBonoB";
 
     /**
      * User data if logged in
