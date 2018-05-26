@@ -65,7 +65,7 @@ router.post('/register', function (req, res, next) {
             from: 'no-reply@obonob.net',
             to: user.email,
             subject: 'oBonoB | Inscription',
-            html: '<p>Salut <strong>' + user.username + ',</strong></p> <p>Ce message fait suite à ton inscription sur oBonoB. Pour activer ton compte, cliques sur le lient suivant: <a href="http://localhost:3000/auth/validation/registration/' + key + '">Activer mon profil</a>.</p> <p>A très vite sur oBonoB !</p>'
+            html: '<p>Salut <strong>' + user.username + ',</strong></p> <p>Ce message fait suite à ton inscription sur oBonoB. Pour activer ton compte, clique sur le lien suivant: <a href="http://obonob.herokuapp.com/auth/validation/registration/' + key + '">Activer mon profil</a>.</p> <p>A très vite sur oBonoB !</p>'
         };
         transporter.sendMail(mailOptions);
 
@@ -126,7 +126,7 @@ router.post('/reset-password', function(req, res, next) {
             from: 'no-reply@obonob.net',
             to: user.email,
             subject: 'oBonoB | Réinitialisation du mot de passe',
-            html: '<p>Bonjour <strong>' + user.username + ',</strong></p> <p>Ce message fait suite à ta demande de réinitialisation de mot de passe. Pour procéder à un changement de mot de passe, cliques sur le lient suivant: <a href="http://localhost:3000/auth/validation/reset-password/' + key + '">Réinitialiser mon mot de passe</a>.</p> <p>Si tu n\'es pas à l\'origine de cette demande, ignore cet email.</p>  <p>A très vite sur oBonoB !</p>'
+            html: '<p>Bonjour <strong>' + user.username + ',</strong></p> <p>Ce message fait suite à ta demande de réinitialisation de mot de passe. Pour procéder à un changement de mot de passe, clique sur le lien suivant: <a href="http://obonob.herokuapp.com/auth/validation/reset-password/' + key + '">Réinitialiser mon mot de passe</a>.</p> <p>Si tu n\'es pas à l\'origine de cette demande, ignore cet email.</p>  <p>A très vite sur oBonoB !</p>'
         };
         transporter.sendMail(mailOptions);
 
