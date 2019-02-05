@@ -23,7 +23,7 @@ var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
         user: 'obonob.app@gmail.com',
-        pass: '3Qt#z#%@Zuaju8q9'
+        pass: 'password'
     }
 });
 app.set('mail-transporter', transporter);
