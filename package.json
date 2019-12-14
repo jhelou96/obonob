@@ -48,7 +48,7 @@
     "jsonwebtoken": "^8.2.1",
     "mongoose": "^5.1.2",
     "mongoose-unique-validator": "^2.0.1",
-    "morgan": "~1.9.0",
+    "morgan": "~1.9.1",
     "ng-click-outside": "^3.3.0",
     "ngx-bar-rating": "^1.1.0",
     "ngx-markdown": "^1.6.0",
